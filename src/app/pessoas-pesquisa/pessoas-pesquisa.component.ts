@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./pessoas-pesquisa.component.css']
 })
 
-export class PessoasPesquisaComponent{
+export class PessoasPesquisaComponent {
 
   public pessoas = [
     { nome: 'Manoel Pinheiro', cidade: 'Uberlândia', estado: 'MG', ativo: true },
