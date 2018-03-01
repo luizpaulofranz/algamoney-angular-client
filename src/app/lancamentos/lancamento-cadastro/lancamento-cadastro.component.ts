@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './lancamento-cadastro.component.html',
   styleUrls: ['./lancamento-cadastro.component.css']
 })
+
 export class LancamentoCadastroComponent implements OnInit {
 
   tipos = [
