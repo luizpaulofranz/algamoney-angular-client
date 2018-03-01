@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { CalendarModule } from 'primeng/components/calendar/calendar';
@@ -12,10 +13,10 @@ import { DropdownModule } from 'primeng/components/dropdown/dropdown';
 
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 
+import { SharedModule } from './../shared/shared.module';
 import { LancamentosGridComponent } from './lancamentos-grid/lancamentos-grid.component';
 import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-cadastro.component';
 import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos-pesquisa.component';
-import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -29,7 +30,9 @@ import { FormsModule } from '@angular/forms';
     CalendarModule,
     SelectButtonModule,
     DropdownModule,
-    CurrencyMaskModule
+    CurrencyMaskModule,
+
+    SharedModule
   ],
   declarations: [
     LancamentosPesquisaComponent,
