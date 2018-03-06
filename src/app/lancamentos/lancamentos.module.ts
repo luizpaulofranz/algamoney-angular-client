@@ -1,3 +1,4 @@
+import { LancamentoService } from './lancamento.service';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -43,6 +44,7 @@ import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos
     LancamentoCadastroComponent,
     LancamentosPesquisaComponent,
     FormsModule
-  ]
+  ],
+  providers: [LancamentoService]
 })
 export class LancamentosModule { }
