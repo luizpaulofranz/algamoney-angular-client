@@ -8,6 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LancamentosPesquisaComponent implements OnInit {
 
+  // propriedade que contem o filtro de descricao
+  descricao: string;
+
   constructor(private service: LancamentoService) { }
 
   lancamentos = [];
@@ -17,7 +20,7 @@ export class LancamentosPesquisaComponent implements OnInit {
   }
 
   pesquisar() {
-    this.service.pesquisar()
+    this.service.pesquisar({descricao: this.descricao})
       .then(response => {
         this.lancamentos = response;
       });

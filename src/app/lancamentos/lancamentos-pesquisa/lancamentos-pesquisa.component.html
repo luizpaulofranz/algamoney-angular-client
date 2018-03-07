@@ -3,28 +3,32 @@
   <!--classes ui sao do sistema de grid responsivo do primeNg, equivalente ao bootstrap-->
   <div class="ui-g">
 
-    <div class="ui-g-12">
-      <h1>Lançamentos</h1>
-    </div>
+    <form autocomplete="off" (ngSubmit)="pesquisar()">
 
-    <div class="ui-g-12 ui-fluid">
-      <label for="">Descrição</label>
-      <input pInputText type="text" >
-    </div>
+      <div class="ui-g-12">
+        <h1>Lançamentos</h1>
+      </div>
 
-    <div class="ui-g-12">
+      <div class="ui-g-12 ui-fluid">
+        <label for="">Descrição</label>
+        <input pInputText type="text" name="descricao" [(ngModel)]="descricao">
+      </div>
 
-      <label style="display:block" for="">Vencimento</label>
-      <input pInputText type="text" style="width:95px">
+      <div class="ui-g-12">
 
-      <label for="">Até</label>
-      <input pInputText type="text" style="width:95px">
+        <label style="display:block" for="">Vencimento</label>
+        <input pInputText type="text" style="width:95px">
 
-    </div>
+        <label for="">Até</label>
+        <input pInputText type="text" style="width:95px">
 
-    <div class="ui-g-12">
-      <button pButton type="submit" label="Pesquisar" ></button>
-    </div>
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Pesquisar" ></button>
+      </div>
+
+    </form>
 
   </div>
 
