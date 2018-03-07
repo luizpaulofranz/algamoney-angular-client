@@ -1,5 +1,6 @@
-import { LancamentoService } from './../lancamento.service';
 import { Component, OnInit } from '@angular/core';
+
+import { LancamentoService, LancamentoFiltro } from './../lancamento.service';
 
 @Component({
   selector: 'app-lancamentos-pesquisa',
@@ -10,6 +11,8 @@ export class LancamentosPesquisaComponent implements OnInit {
 
   // propriedade que contem o filtro de descricao
   descricao: string;
+  dataVencimentoInicio: Date;
+  dataVencimentoFim: Date;
 
   constructor(private service: LancamentoService) { }
 
@@ -20,7 +23,16 @@ export class LancamentosPesquisaComponent implements OnInit {
   }
 
   pesquisar() {
-    this.service.pesquisar({descricao: this.descricao})
+
+    // criamos um objeto do tipo filtro (uma interface)
+    const filter: LancamentoFiltro = {
+      descricao: this.descricao,
+      dataVencimentoInicio: this.dataVencimentoInicio,
+      dataVencimentoFim: this.dataVencimentoFim
+    };
+
+    // passamos o objeto como parametro
+    this.service.pesquisar(filter)
       .then(response => {
         this.lancamentos = response;
       });

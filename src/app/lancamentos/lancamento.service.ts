@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 
 import 'rxjs/add/operator/toPromise';
 
+// importe tudo desse local e de o apelido de "moment"
+import * as moment from 'moment';
+
 @Injectable()
 export class LancamentoService {
 
@@ -16,6 +19,13 @@ export class LancamentoService {
     // para conter nossos filtros na URL
     const params = new URLSearchParams();
 
+    if (filtro.dataVencimentoInicio) {
+      // usamos a biblioteca moment para converter Date para string
+      params.set('initDate', moment(filtro.dataVencimentoInicio).format('YYYY-MM-DD'));
+    }
+    if (filtro.dataVencimentoFim) {
+      params.set('finishDate', moment(filtro.dataVencimentoFim).format('YYYY-MM-DD'));
+    }
     if (filtro.descricao) {
       params.set('descricao', filtro.descricao);
     }
@@ -34,4 +44,6 @@ export class LancamentoService {
  */
 export interface LancamentoFiltro {
   descricao: string;
+  dataVencimentoInicio: Date;
+  dataVencimentoFim: Date;
 }
