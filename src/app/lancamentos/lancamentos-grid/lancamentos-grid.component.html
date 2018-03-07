@@ -1,5 +1,6 @@
 <!--Passamos o array de lancamentos como parametro para esse componente do primeng-->
-<p-dataTable [value]="lancamentos" [paginator]="true" [rows]="10" [responsive]="true">
+<p-dataTable [value]="lancamentos" [paginator]="true" [rows]="10"
+  [responsive]="true" emptyMessage="Nenhum registro foi encontrado!">
   <!--aqui acessamos uma propriedade de Lancamento-->
   <p-column field="pessoa" header="Pessoa"></p-column>
   <p-column field="descricao" header="Descrição"></p-column>
