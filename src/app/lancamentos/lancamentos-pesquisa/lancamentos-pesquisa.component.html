@@ -11,18 +11,18 @@
 
       <div class="ui-g-12 ui-fluid">
         <label for="">Descrição</label>
-        <input pInputText type="text" name="descricao" [(ngModel)]="descricao">
+        <input pInputText type="text" name="filter.descricao" [(ngModel)]="descricao">
       </div>
 
       <div class="ui-g-12">
 
         <label style="display:block" for="">Vencimento</label>
         <p-calendar dateFormat="dd/mm/yy" [inputStyle]="{ width: '95px' }"
-          name="vencimentoInicio" [(ngModel)]="dataVencimentoInicio"></p-calendar>
+          name="vencimentoInicio" [(ngModel)]="filter.dataVencimentoInicio"></p-calendar>
 
         <label for="">Até</label>
         <p-calendar dateFormat="dd/mm/yy" [inputStyle]="{ width: '95px' }"
-          name="vencimentoFim" [(ngModel)]="dataVencimentoFim"></p-calendar>
+          name="vencimentoFim" [(ngModel)]="filter.dataVencimentoFim"></p-calendar>
 
       </div>
 
@@ -37,7 +37,44 @@
   <div class="ui-g">
     <div class="ui-g-12">
 
-      <app-lancamentos-grid [lancamentos]="lancamentos"></app-lancamentos-grid>
+      <!--Passamos o array de lancamentos como parametro para esse componente do primeng
+      LazyLoad, total records eh o numero total de lancamentos, nao da pagina, usa para montar a paginacao
+      onLazyLoad eh executado sempre que navegamos na paginacao, e eh executado quando a pagina carrega-->
+      <p-dataTable [paginator]="true" lazy="true" [responsive]="true"
+      [value]="lancamentos" [rows]="filter.itens" [totalRecords]="totalRegistros"
+      (onLazyLoad)="currentPage($event)"
+      emptyMessage="Nenhum registro foi encontrado!">
+        <!--aqui acessamos uma propriedade de Lancamento-->
+        <p-column field="pessoa" header="Pessoa"></p-column>
+        <p-column field="descricao" header="Descrição"></p-column>
+        <p-column header="Vencimento" styleClass="col-data">
+          <ng-template let-lanc="rowData" pTemplate="body">
+              <span>{{ lanc.dataVencimento | date:'dd/MM/yyyy' }}</span>
+          </ng-template>
+        </p-column>
+        <p-column header="Pagamento" styleClass="col-data">
+          <ng-template let-lanc="rowData" pTemplate="body">
+              <span>{{ lanc.dataPagamento | date:'dd/MM/yyyy' }}</span>
+          </ng-template>
+        </p-column>
+        <p-column field="valor" header="Valor" styleClass="col-valor">
+          <!--body altera as celulas, header apenas o cabecalho da tabela-->
+          <!--aqui criamos uma variavel "lanc" pegando os dados do p-dataTable-->
+          <ng-template let-lanc="rowData" pTemplate="body">
+            <span [style.color]="lanc.tipo==='DESPESA'?'red':'blue'">{{lanc.valor}}</span>
+          </ng-template>
+        </p-column>
+
+        <p-column styleClass="col-actions">
+            <ng-template pTemplate="body">
+              <!--usando icones do fonts-awesome-->
+              <a pButton icon="fa-pencil" pTooltip="Editar" tooltipPosition="top"></a>
+              <button pButton icon="fa-trash" pTooltip="Excluir" tooltipPosition="top"></button>
+            </ng-template>
+        </p-column>
+
+      </p-dataTable>
+
 
     </div>
 

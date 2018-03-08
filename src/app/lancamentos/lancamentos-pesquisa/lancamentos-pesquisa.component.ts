@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { LancamentoService, LancamentoFiltro } from './../lancamento.service';
+import { LazyLoadEvent } from 'primeng/components/common/lazyloadevent';
 
 @Component({
   selector: 'app-lancamentos-pesquisa',
@@ -10,32 +11,32 @@ import { LancamentoService, LancamentoFiltro } from './../lancamento.service';
 export class LancamentosPesquisaComponent implements OnInit {
 
   // propriedade que contem o filtro de descricao
-  descricao: string;
-  dataVencimentoInicio: Date;
-  dataVencimentoFim: Date;
+  filter = new LancamentoFiltro();
 
   constructor(private service: LancamentoService) { }
 
   lancamentos = [];
+  totalRegistros = 0;
 
   ngOnInit() {
-    this.pesquisar();
+    // this.pesquisar();
   }
 
-  pesquisar() {
-
-    // criamos um objeto do tipo filtro (uma interface)
-    const filter: LancamentoFiltro = {
-      descricao: this.descricao,
-      dataVencimentoInicio: this.dataVencimentoInicio,
-      dataVencimentoFim: this.dataVencimentoFim
-    };
-
+  pesquisar(pagina = 0) {
+    this.filter.pagina = pagina;
     // passamos o objeto como parametro
-    this.service.pesquisar(filter)
+    this.service.pesquisar(this.filter)
       .then(response => {
-        this.lancamentos = response;
+        // content contem a carga util
+        this.lancamentos = response.content;
+        this.totalRegistros = response.totalElements;
       });
+  }
+
+  // metodo chamado pelo componente grid do primeNg
+  currentPage(event: LazyLoadEvent) {
+    const pagina = event.first / event.rows;
+    this.pesquisar(pagina);
   }
 
 }
