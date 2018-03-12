@@ -22,7 +22,11 @@
     <div class="ui-g-12">
 
       <!--Passamos o array de pessoas como parametro para esse componente do primeng-->
-      <p-dataTable [value]="pessoas" [paginator]="true" [rows]="10" [responsive]="true">
+      <p-dataTable lazy="true" [value]="pessoas" [paginator]="true"
+        [rows]="filter.itens" [responsive]="true" [totalRecords]="totalRegistros"
+        (onLazyLoad)="currentPage($event)"
+        emptyMessage="Nenhum registro foi encontrado!" >
+
         <p-column field="nome" header="Nome"></p-column>
         <p-column field="cidade" header="Cidade"></p-column>
         <p-column field="estado" header="Estado"></p-column>
