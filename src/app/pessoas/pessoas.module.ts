@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { SharedModule } from './../shared/shared.module';
 import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.component';
 import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.component';
-import { PessoasGridComponent } from './pessoas-grid/pessoas-grid.component';
+import { PessoasService } from './pessoas.service';
 
 import { DropdownModule } from 'primeng/components/dropdown/dropdown';
 import { InputTextModule } from 'primeng/components/inputtext/inputtext';
@@ -28,12 +28,12 @@ import { InputMaskModule } from 'primeng/components/inputmask/inputmask';
   ],
   declarations: [
     PessoasPesquisaComponent,
-    PessoaCadastroComponent,
-    PessoasGridComponent
+    PessoaCadastroComponent
   ],
   exports: [
     PessoaCadastroComponent,
     PessoasPesquisaComponent
-  ]
+  ],
+  providers: [PessoasService]
 })
 export class PessoasModule { }

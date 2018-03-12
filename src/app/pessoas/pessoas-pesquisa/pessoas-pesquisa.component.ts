@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { PessoasService, PessoaFiltro } from './../pessoas.service';
+
+import { LazyLoadEvent } from 'primeng/components/common/lazyloadevent';
 
 @Component({
   selector: 'app-pessoas-pesquisa',
@@ -8,12 +11,29 @@ import { Component } from '@angular/core';
 
 export class PessoasPesquisaComponent {
 
-  public pessoas = [
-    { nome: 'Manoel Pinheiro', cidade: 'Uberlândia', estado: 'MG', ativo: true },
-    { nome: 'Sebastião da Silva', cidade: 'São Paulo', estado: 'SP', ativo: false },
-    { nome: 'Carla Souza', cidade: 'Florianópolis', estado: 'SC', ativo: true },
-    { nome: 'Luís Pereira', cidade: 'Curitiba', estado: 'PR', ativo: true },
-    { nome: 'Vilmar Andrade', cidade: 'Rio de Janeiro', estado: 'RJ', ativo: false },
-    { nome: 'Paula Maria', cidade: 'Uberlândia', estado: 'MG', ativo: true }
-  ];
+  // propriedade que contem o filtro de descricao
+  filter = new PessoaFiltro();
+
+  constructor(private service: PessoasService) { }
+
+  pessoas = [];
+  totalRegistros = 0;
+
+  pesquisar(pagina = 0) {
+    this.filter.pagina = pagina;
+    // passamos o objeto como parametro
+    this.service.pesquisar(this.filter)
+      .then(response => {
+        // content contem a carga util
+        this.pessoas = response.content;
+        this.totalRegistros = response.totalElements;
+      });
+  }
+
+  // metodo chamado pelo componente grid do primeNg
+  currentPage(event: LazyLoadEvent) {
+    const pagina = event.first / event.rows;
+    this.pesquisar(pagina);
+  }
+
 }
