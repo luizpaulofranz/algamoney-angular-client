@@ -11,3 +11,13 @@
 <!--Componente para exibir nossas mensagens ao usuario-->
 <!--depende de um CSS definido no angular.cli.json-->
 <ng2-toasty></ng2-toasty>
+<!--Esse eh o componente para exibir mensagens de confirmacao-->
+<p-confirmDialog header="Confirmação" icon="fa fa-question-circle" #dialog>
+  <!--isso sao personalizações do componente-->
+  <p-footer>
+      <button type="button" pButton icon="fa-check" label="Sim"
+        (click)="dialog.accept()"></button>
+      <button type="button" pButton icon="fa-times" label="Não"
+        (click)="dialog.reject()"></button>
+    </p-footer>
+</p-confirmDialog>

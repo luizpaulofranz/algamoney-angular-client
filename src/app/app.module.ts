@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 
 import {ToastyModule} from 'ng2-toasty';
+import { ConfirmDialogModule } from 'primeng/components/confirmdialog/confirmdialog';
+import { ConfirmationService } from 'primeng/components/common/api';
 
 import { CoreModule } from './core/core.module';
 import { PessoasModule } from './pessoas/pessoas.module';
@@ -23,11 +25,14 @@ import { AppComponent } from './app.component';
     CoreModule,
     // só usamos o forRoot quando estamos no modulo raiz
     ToastyModule.forRoot(),
+    // esse modulo de janelas de confirmação do primeNg
+    ConfirmDialogModule,
 
     LancamentosModule,
     PessoasModule
   ],
-  providers: [],
+  // esse service eh para manipular os Confir Dialogs
+  providers: [ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
