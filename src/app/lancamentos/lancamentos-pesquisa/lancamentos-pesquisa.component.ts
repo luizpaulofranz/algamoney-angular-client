@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
-import { LazyLoadEvent } from 'primeng/components/common/api';
+import { LazyLoadEvent, ConfirmationService } from 'primeng/components/common/api';
 import { ToastyService } from 'ng2-toasty';
 
 import { LancamentoService, LancamentoFiltro } from './../lancamento.service';
@@ -17,7 +17,8 @@ export class LancamentosPesquisaComponent implements OnInit {
 
   constructor(
     private service: LancamentoService,
-    private toasty: ToastyService
+    private toasty: ToastyService,
+    private confirmation: ConfirmationService
   ) { }
 
   lancamentos = [];
@@ -44,6 +45,15 @@ export class LancamentosPesquisaComponent implements OnInit {
   currentPage(event: LazyLoadEvent) {
     const pagina = event.first / event.rows;
     this.pesquisar(pagina);
+  }
+
+  /** Esse eh o metodo que deve ser cahmado no template */
+  confirmarExclusao(lancamento: any) {
+    this.confirmation.confirm({
+      message: 'Tem certeza que deseja excluir?',
+      // callback, qual funcao sera chamada
+      accept: () => this.excluir(lancamento)
+    });
   }
 
   excluir(lancamento: any) {
