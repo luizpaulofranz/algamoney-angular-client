@@ -43,7 +43,8 @@
       <p-dataTable [paginator]="true" lazy="true" [responsive]="true"
       [value]="lancamentos" [rows]="filter.itens" [totalRecords]="totalRegistros"
       (onLazyLoad)="currentPage($event)"
-      emptyMessage="Nenhum registro foi encontrado!">
+      emptyMessage="Nenhum registro foi encontrado!"
+      #table>
         <!--aqui acessamos uma propriedade de Lancamento-->
         <p-column field="pessoa" header="Pessoa"></p-column>
         <p-column field="descricao" header="Descrição"></p-column>
@@ -66,10 +67,11 @@
         </p-column>
 
         <p-column styleClass="col-actions">
-            <ng-template pTemplate="body">
+            <ng-template pTemplate="body" let-lanc="rowData">
               <!--usando icones do fonts-awesome-->
               <a pButton icon="fa-pencil" pTooltip="Editar" tooltipPosition="top"></a>
-              <button pButton icon="fa-trash" pTooltip="Excluir" tooltipPosition="top"></button>
+              <button pButton icon="fa-trash" pTooltip="Excluir"
+                tooltipPosition="top" (click)="excluir(lanc)"></button>
             </ng-template>
         </p-column>
 

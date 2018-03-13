@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { LancamentoService, LancamentoFiltro } from './../lancamento.service';
 import { LazyLoadEvent } from 'primeng/components/common/lazyloadevent';
@@ -17,6 +17,8 @@ export class LancamentosPesquisaComponent implements OnInit {
 
   lancamentos = [];
   totalRegistros = 0;
+  // assim que recuperamos um elemento do template
+  @ViewChild('table') table;
 
   ngOnInit() {
     // this.pesquisar();
@@ -37,6 +39,13 @@ export class LancamentosPesquisaComponent implements OnInit {
   currentPage(event: LazyLoadEvent) {
     const pagina = event.first / event.rows;
     this.pesquisar(pagina);
+  }
+
+  excluir(lancamento: any) {
+    this.service.excluir(lancamento.codigo)
+      .then(() => {
+        this.table.first = 0;
+      });
   }
 
 }

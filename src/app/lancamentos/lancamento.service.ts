@@ -41,6 +41,15 @@ export class LancamentoService {
       .then(response => response.json());
   }
 
+  excluir(id: number): Promise<void> {
+    const headers = new Headers();
+    headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+
+    return this.http.delete(`${this.lancamentosUrl}/${id}`, { headers })
+      .toPromise()
+      .then(() => null);
+  }
+
 }
 
 /**
