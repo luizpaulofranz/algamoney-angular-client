@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
+import { LazyLoadEvent } from 'primeng/components/common/api';
+import { ToastyService } from 'ng2-toasty';
+
 import { LancamentoService, LancamentoFiltro } from './../lancamento.service';
-import { LazyLoadEvent } from 'primeng/components/common/lazyloadevent';
 
 @Component({
   selector: 'app-lancamentos-pesquisa',
@@ -13,7 +15,10 @@ export class LancamentosPesquisaComponent implements OnInit {
   // propriedade que contem o filtro de descricao
   filter = new LancamentoFiltro();
 
-  constructor(private service: LancamentoService) { }
+  constructor(
+    private service: LancamentoService,
+    private toasty: ToastyService
+  ) { }
 
   lancamentos = [];
   totalRegistros = 0;
@@ -44,7 +49,13 @@ export class LancamentosPesquisaComponent implements OnInit {
   excluir(lancamento: any) {
     this.service.excluir(lancamento.codigo)
       .then(() => {
-        this.table.first = 0;
+        if (this.table.first === 0) {
+          this.pesquisar();
+        } else {
+          this.table.first = 0;
+        }
+        // assim adicionamos uma mensagem ao usuario
+        this.toasty.success('Registro Excluído com Sucesso!');
       });
   }
 
