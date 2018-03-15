@@ -4,6 +4,7 @@ import { LazyLoadEvent, ConfirmationService } from 'primeng/components/common/ap
 import { ToastyService } from 'ng2-toasty';
 
 import { LancamentoService, LancamentoFiltro } from './../lancamento.service';
+import { ErrorHandlerService } from '../../core/error-handler.service';
 
 @Component({
   selector: 'app-lancamentos-pesquisa',
@@ -18,7 +19,8 @@ export class LancamentosPesquisaComponent implements OnInit {
   constructor(
     private service: LancamentoService,
     private toasty: ToastyService,
-    private confirmation: ConfirmationService
+    private confirmation: ConfirmationService,
+    private errorHandler: ErrorHandlerService
   ) { }
 
   lancamentos = [];
@@ -38,7 +40,8 @@ export class LancamentosPesquisaComponent implements OnInit {
         // content contem a carga util
         this.lancamentos = response.content;
         this.totalRegistros = response.totalElements;
-      });
+      })
+      .catch(error => this.errorHandler.handle(error));
   }
 
   // metodo chamado pelo componente grid do primeNg
@@ -66,7 +69,8 @@ export class LancamentosPesquisaComponent implements OnInit {
         }
         // assim adicionamos uma mensagem ao usuario
         this.toasty.success('Registro Excluído com Sucesso!');
-      });
+      })
+      .catch(error => this.errorHandler.handle(error));
   }
 
 }
