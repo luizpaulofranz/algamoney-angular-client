@@ -62,7 +62,7 @@
           <!--body altera as celulas, header apenas o cabecalho da tabela-->
           <!--aqui criamos uma variavel "lanc" pegando os dados do p-dataTable-->
           <ng-template let-lanc="rowData" pTemplate="body">
-            <span [style.color]="lanc.tipo==='DESPESA'?'red':'blue'">{{lanc.valor}}</span>
+            <span [style.color]="lanc.tipo==='DESPESA'?'red':'blue'">{{lanc.valor | number:'1.2-2'}}</span>
           </ng-template>
         </p-column>
 
