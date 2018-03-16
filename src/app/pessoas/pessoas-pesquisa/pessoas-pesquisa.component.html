@@ -28,14 +28,15 @@
         emptyMessage="Nenhum registro foi encontrado!" >
 
         <p-column field="nome" header="Nome"></p-column>
-        <p-column field="cidade" header="Cidade"></p-column>
-        <p-column field="estado" header="Estado"></p-column>
-        <p-column field="status" header="Status">
+        <p-column field="endereco.cidade" header="Cidade"></p-column>
+        <p-column field="endereco.estado" header="Estado"></p-column>
+
+        <p-column field="ativo" header="Status">
           <!--body altera as celulas, header apenas o cabecalho da tabela-->
           <!--aqui criamos uma variavel "pes" pegando os dados do p-dataTable-->
           <ng-template let-pes="rowData" pTemplate="body">
               <a href="javascript:;" [pTooltip]="pes.ativo ? 'Desativar' : 'Ativar'"
-                tooltipPosition="top">
+                tooltipPosition="top" (click)="inverterStatus(pes)">
                 {{ pes.ativo ? 'Ativo' : 'Inativo' }}
               </a>
           </ng-template>

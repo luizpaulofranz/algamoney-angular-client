@@ -38,6 +38,7 @@ export class PessoasPesquisaComponent {
         this.pessoas = response.content;
         this.totalRegistros = response.totalElements;
       });
+      console.log(this.pessoas);
   }
 
   // metodo chamado pelo componente grid do primeNg
@@ -68,6 +69,22 @@ export class PessoasPesquisaComponent {
         this.toasty.success('Registro Excluído com Sucesso!');
       })
       .catch(error => this.errorHandler.handle(error));
+  }
+
+  // inverte o status de uma pessoa, usado para ativar ou desativar a pessoa
+  inverterStatus (pessoa: any) {
+    const novoStatus = !pessoa.ativo;
+
+    this.service.inverterStatus(pessoa.id, novoStatus)
+      .then(() => {
+        const partial = novoStatus ? 'ativada' : 'desativada';
+        this.toasty.success(`Pessoa ${partial} com Sucesso!`);
+        // atualizamos o registro com o novo status, para alterar no grid
+        this.pessoas.find( (listPessoa) => {
+            return listPessoa.id === pessoa.id;
+        }).ativo = novoStatus;
+
+      }).catch(erro => this.errorHandler.handle(erro));
   }
 
 }

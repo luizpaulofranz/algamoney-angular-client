@@ -53,6 +53,16 @@ export class PessoasService {
       .then(() => null);
   }
 
+  inverterStatus ( id: number, status: boolean): Promise<any> {
+    const headers = new Headers();
+    headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+    headers.append('Content-Type', 'application/json');
+    // o segundo parametro eh o corpo da mensagem
+    return this.http.put(`${this.pessoasUrl}/${id}/ativo`, status, { headers })
+      .toPromise()
+      .then(() => null);
+  }
+
 }
 
 /**
