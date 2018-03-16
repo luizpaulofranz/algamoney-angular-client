@@ -25,9 +25,9 @@ registerLocaleData(localePt, 'pt-BR');
     BrowserModule,
     BrowserAnimationsModule,
     HttpModule,
+
     // modulo que contem os componentes que sao usados apenas pelo AppComponent, como cabecalho
     CoreModule,
-
     LancamentosModule,
     PessoasModule
   ],

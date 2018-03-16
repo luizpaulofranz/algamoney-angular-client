@@ -22,7 +22,7 @@
     <div class="ui-g-12">
 
       <!--Passamos o array de pessoas como parametro para esse componente do primeng-->
-      <p-dataTable lazy="true" [value]="pessoas" [paginator]="true"
+      <p-dataTable lazy="true" [value]="pessoas" [paginator]="true" #table
         [rows]="filter.itens" [responsive]="true" [totalRecords]="totalRegistros"
         (onLazyLoad)="currentPage($event)"
         emptyMessage="Nenhum registro foi encontrado!" >
@@ -42,10 +42,10 @@
         </p-column>
 
         <p-column styleClass="col-actions">
-            <ng-template pTemplate="body">
+            <ng-template pTemplate="body" let-pes="rowData">
               <!--usando icones do fonts-awesome-->
               <a pButton icon="fa-pencil" pTooltip="Editar" tooltipPosition="top"></a>
-              <button pButton icon="fa-trash" pTooltip="Excluir" tooltipPosition="top"></button>
+              <button pButton icon="fa-trash" pTooltip="Excluir" tooltipPosition="top" (click)="confirmarExclusao(pes)"></button>
             </ng-template>
         </p-column>
 
