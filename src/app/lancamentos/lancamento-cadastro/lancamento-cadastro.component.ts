@@ -1,4 +1,8 @@
+import { ErrorHandlerService } from './../../core/error-handler.service';
+import { CategoriaService } from './../../categoria/categoria.service';
 import { Component, OnInit } from '@angular/core';
+
+import 'rxjs/add/operator/toPromise';
 
 @Component({
   selector: 'app-lancamento-cadastro',
@@ -8,14 +12,12 @@ import { Component, OnInit } from '@angular/core';
 
 export class LancamentoCadastroComponent implements OnInit {
 
+
+  public categorias = [];
+
   tipos = [
     { label: 'Receita', value: 'RECEITA' },
     { label: 'Despesa', value: 'DESPESA' }
-  ];
-
-  categorias = [
-    { label: 'Alimentação', value: 1 },
-    { label: 'Transporte', value: 2 },
   ];
 
   pessoas = [
@@ -24,9 +26,24 @@ export class LancamentoCadastroComponent implements OnInit {
     { label: 'Maria Abadia', value: 3 },
   ];
 
-  constructor() { }
+  constructor(
+    private categoriaService: CategoriaService,
+    private errorHandler: ErrorHandlerService
+  ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.carregarCategorias();
+  }
+
+  carregarCategorias() {
+    return this.categoriaService.listarTodas()
+      .then(categorias => {
+        // para cada elemento do array atualiza o array
+        // com isso convertemos o array da API para o array do componente do primeNg
+        this.categorias = categorias.map( categoria => {
+          return { label: categoria.nome, value: categoria.id };
+        });
+      }).catch(error => this.errorHandler.handle(error));
   }
 
 }

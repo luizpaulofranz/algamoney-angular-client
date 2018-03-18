@@ -7,6 +7,7 @@ import { ErrorHandlerService } from './error-handler.service';
 import { ToastyModule } from 'ng2-toasty';
 import { ConfirmDialogModule } from 'primeng/components/confirmdialog/confirmdialog';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
+import { CategoriaService } from '../categoria/categoria.service';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { ConfirmationService } from 'primeng/components/common/confirmationservi
     ErrorHandlerService,
     // esse service eh para manipular os Confir Dialogs
     ConfirmationService,
+    CategoriaService,
     // Provider Por Valor
     { provide: LOCALE_ID, useValue: 'pt-BR' }
   ]
