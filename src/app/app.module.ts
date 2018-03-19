@@ -2,20 +2,22 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
-
-// Locale Imports
-// Adicione o registerLocaleData e o localePt
-import localePt from '@angular/common/locales/pt';
-import { registerLocaleData } from '@angular/common';
+import { Routes, RouterModule } from '@angular/router';
 
 import { CoreModule } from './core/core.module';
 import { PessoasModule } from './pessoas/pessoas.module';
 import { LancamentosModule } from './lancamentos/lancamentos.module';
 import { AppComponent } from './app.component';
 
+import { LancamentosPesquisaComponent } from './lancamentos/lancamentos-pesquisa/lancamentos-pesquisa.component';
+import { LancamentoCadastroComponent } from './lancamentos/lancamento-cadastro/lancamento-cadastro.component';
+import { PessoasPesquisaComponent } from './pessoas/pessoas-pesquisa/pessoas-pesquisa.component';
 
-// E por fim, registre o localePt como 'pt-BR'
-registerLocaleData(localePt, 'pt-BR');
+const routes: Routes = [
+  { path: 'lancamentos', component: LancamentosPesquisaComponent },
+  { path: 'lancamentos/novo', component: LancamentoCadastroComponent },
+  { path: 'pessoas', component: PessoasPesquisaComponent }
+];
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ registerLocaleData(localePt, 'pt-BR');
     BrowserModule,
     BrowserAnimationsModule,
     HttpModule,
+    // passamos as rotas para o modulo de rotas
+    RouterModule.forRoot(routes),
 
     // modulo que contem os componentes que sao usados apenas pelo AppComponent, como cabecalho
     CoreModule,
