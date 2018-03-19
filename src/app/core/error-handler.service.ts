@@ -30,7 +30,6 @@ export class ErrorHandlerService {
       // msg = errorResponse[0].menssagemUsuario;
 
     } else {
-      console.log('hihi');
       msg = 'Erro ao processar o serviço remoto!';
       console.log('Ocorreu um erro!', errorResponse);
     }

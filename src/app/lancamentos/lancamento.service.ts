@@ -5,6 +5,7 @@ import 'rxjs/add/operator/toPromise';
 
 // importe tudo desse local e dê o apelido de "moment"
 import * as moment from 'moment';
+import { Lancamento } from '../core/model';
 
 @Injectable()
 export class LancamentoService {
@@ -48,6 +49,18 @@ export class LancamentoService {
     return this.http.delete(`${this.lancamentosUrl}/${id}`, { headers })
       .toPromise()
       .then(() => null);
+  }
+
+  adicionar(lancamento: Lancamento): Promise<Lancamento> {
+    const headers = new Headers();
+    headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+    headers.append('Content-Type', 'application/json');
+    console.log(lancamento);
+    return this.http.post(this.lancamentosUrl,
+        // o body eh string
+        JSON.stringify(lancamento), { headers })
+      .toPromise()
+      .then(response => response.json());
   }
 
 }
