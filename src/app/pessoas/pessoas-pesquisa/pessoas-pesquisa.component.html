@@ -7,15 +7,18 @@
       <h1>Pessoas</h1>
     </div>
 
-    <div class="ui-g-12 ui-fluid">
-      <label for="">Nome</label>
-      <input pInputText type="text" >
-    </div>
+    <form autocomplete="off" (ngSubmit)="pesquisar()">
 
-    <div class="ui-g-12">
-      <button pButton type="submit" label="Pesquisar" ></button>
-    </div>
+      <div class="ui-g-12 ui-fluid">
+        <label for="">Nome</label>
+        <input pInputText type="text" name="filter.nome" [(ngModel)]="filter.nome" >
+      </div>
 
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Pesquisar" ></button>
+      </div>
+
+    </form>
   </div>
 
   <div class="ui-g">
