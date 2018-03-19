@@ -1,5 +1,6 @@
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 // Locale Imports
 // Adicione o registerLocaleData e o localePt
@@ -20,6 +21,8 @@ registerLocaleData(localePt, 'pt-BR');
 @NgModule({
   imports: [
     CommonModule,
+    // para usar routerLink no frontend
+    RouterModule,
     // só usamos o forRoot quando estamos no modulo raiz
     ToastyModule.forRoot(),
     // esse modulo de janelas de confirmação do primeNg
