@@ -16,6 +16,8 @@ import { PessoasPesquisaComponent } from './pessoas/pessoas-pesquisa/pessoas-pes
 const routes: Routes = [
   { path: 'lancamentos', component: LancamentosPesquisaComponent },
   { path: 'lancamentos/novo', component: LancamentoCadastroComponent },
+  // passando parametros via URL, precisamos pegar isso no LancamentoCadastroComponent
+  { path: 'lancamentos/:id', component: LancamentoCadastroComponent },
   { path: 'pessoas', component: PessoasPesquisaComponent }
 ];
 

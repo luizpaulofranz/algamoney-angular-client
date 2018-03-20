@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 import 'rxjs/add/operator/toPromise';
 import { ToastyService } from 'ng2-toasty';
@@ -33,12 +34,31 @@ export class LancamentoCadastroComponent implements OnInit {
     private pessoasService: PessoasService,
     private errorHandler: ErrorHandlerService,
     private lancamentoService: LancamentoService,
-    private toasty: ToastyService
+    private toasty: ToastyService,
+    // para pegar dados da URL (definidos nas rotas)
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+    // assim pegamos dados das rotas
+    const id = this.route.snapshot.params['id'];
+    this.carregarLancamento(id);
+
     this.carregarCategorias();
     this.carregarPessoas();
+  }
+
+  get editando() {
+    return Boolean(this.lancamento.id);
+  }
+
+  carregarLancamento(id: number) {
+    if (id) {
+      this.lancamentoService.getById(id).then(
+        // quando resolver a promise, atribuimos ao nosso lancamento
+        response => this.lancamento = response
+      ).catch(error => this.errorHandler.handle(error));
+    }
   }
 
   carregarCategorias() {
@@ -61,7 +81,16 @@ export class LancamentoCadastroComponent implements OnInit {
       }).catch(error => this.errorHandler.handle(error));
   }
 
+  // trata se eh edicao ou novo
   salvar(form: FormControl) {
+    if (this.editando) {
+      this.atualizarLancamento(form);
+    } else {
+      this.adicionarLancamento(form);
+    }
+  }
+
+  adicionarLancamento(form: FormControl) {
     this.lancamentoService.adicionar(this.lancamento)
       .then(() => {
         this.toasty.success('Lançamento adicionado com sucesso!');
@@ -71,5 +100,15 @@ export class LancamentoCadastroComponent implements OnInit {
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
+
+  atualizarLancamento(form: FormControl) {
+    this.lancamentoService.atualizar(this.lancamento)
+      .then(lancamento => {
+        this.lancamento = lancamento;
+
+        this.toasty.success('Lançamento alterado com sucesso!');
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+}
 
 }

@@ -55,12 +55,59 @@ export class LancamentoService {
     const headers = new Headers();
     headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
     headers.append('Content-Type', 'application/json');
-    console.log(lancamento);
     return this.http.post(this.lancamentosUrl,
         // o body eh string
         JSON.stringify(lancamento), { headers })
       .toPromise()
       .then(response => response.json());
+  }
+
+  getById(id: number): Promise<Lancamento> {
+    const headers = new Headers();
+    headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+    return this.http.get(`${this.lancamentosUrl}/${id}`, { headers })
+      .toPromise()
+      .then(response => {
+        // convertemos o json em uma classe
+        const retorno = response.json() as Lancamento;
+        console.log(retorno);
+        // convertemos a data para objeto
+        this.stringToDate([retorno]);
+        return retorno;
+      });
+  }
+
+  atualizar(lancamento: Lancamento): Promise<Lancamento> {
+    const headers = new Headers();
+    headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+    headers.append('Content-Type', 'application/json');
+    console.log('entrou');
+    console.log(lancamento);
+    return this.http.put(`${this.lancamentosUrl}/${lancamento.id}`,
+        // o body eh string
+        JSON.stringify(lancamento), { headers })
+      .toPromise()
+      .then(response => {
+        const retorno = response.json() as Lancamento;
+        console.log('retorno');
+        console.log(retorno);
+        // convertemos a data
+        this.stringToDate([retorno]);
+        return retorno;
+      });
+  }
+
+  // usamos a lib moment.js para converter datas em String para objetos Date
+  stringToDate(lancamentos: Lancamento[]) {
+    for (const lancamento of lancamentos) {
+      lancamento.dataVencimento = moment(lancamento.dataVencimento,
+        'YYYY-MM-DD').toDate();
+
+      if (lancamento.dataPagamento) {
+        lancamento.dataPagamento = moment(lancamento.dataPagamento,
+          'YYYY-MM-DD').toDate();
+      }
+    }
   }
 
 }
