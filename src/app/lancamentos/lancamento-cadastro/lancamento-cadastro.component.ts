@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -38,10 +39,12 @@ export class LancamentoCadastroComponent implements OnInit {
     // para pegar dados da URL (definidos nas rotas)
     private route: ActivatedRoute,
     // para fazer redirects
-    private router: Router
+    private router: Router,
+    private title: Title
   ) { }
 
   ngOnInit(): void {
+    this.title.setTitle('Novo Lançamento');
     // assim pegamos dados das rotas
     const id = this.route.snapshot.params['id'];
     this.carregarLancamento(id);
@@ -58,8 +61,11 @@ export class LancamentoCadastroComponent implements OnInit {
     if (id) {
       this.lancamentoService.getById(id).then(
         // quando resolver a promise, atribuimos ao nosso lancamento
-        response => this.lancamento = response
-      ).catch(error => this.errorHandler.handle(error));
+        response => {
+        this.lancamento = response;
+        // atualizmo o titulo da pagina
+        this.getPageTitleOnEdit();
+      }).catch(error => this.errorHandler.handle(error));
     }
   }
 
@@ -112,6 +118,7 @@ export class LancamentoCadastroComponent implements OnInit {
         this.lancamento = lancamento;
 
         this.toasty.success('Lançamento alterado com sucesso!');
+        this.getPageTitleOnEdit();
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
@@ -121,6 +128,10 @@ export class LancamentoCadastroComponent implements OnInit {
     form.reset();
     this.lancamento = new Lancamento();
     this.router.navigate(['lancamentos/novo']);
+  }
+
+  getPageTitleOnEdit() {
+    this.title.setTitle(`Edição de lançamento: ${this.lancamento.descricao}`);
   }
 
 }

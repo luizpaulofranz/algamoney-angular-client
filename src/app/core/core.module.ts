@@ -2,6 +2,7 @@ import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component'
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 // Locale Imports
 // Adicione o registerLocaleData e o localePt
@@ -42,6 +43,8 @@ registerLocaleData(localePt, 'pt-BR');
     // esse service eh para manipular os Confir Dialogs
     ConfirmationService,
     CategoriaService,
+    // Servico para alterar o titulo das nossas paginas
+    Title,
     // Provider Por Valor
     { provide: LOCALE_ID, useValue: 'pt-BR' }
   ]
