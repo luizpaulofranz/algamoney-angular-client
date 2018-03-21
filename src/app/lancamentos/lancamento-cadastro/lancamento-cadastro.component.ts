@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import 'rxjs/add/operator/toPromise';
 import { ToastyService } from 'ng2-toasty';
@@ -36,7 +36,9 @@ export class LancamentoCadastroComponent implements OnInit {
     private lancamentoService: LancamentoService,
     private toasty: ToastyService,
     // para pegar dados da URL (definidos nas rotas)
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    // para fazer redirects
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -92,11 +94,14 @@ export class LancamentoCadastroComponent implements OnInit {
 
   adicionarLancamento(form: FormControl) {
     this.lancamentoService.adicionar(this.lancamento)
-      .then(() => {
+      .then((newLancamento) => {
         this.toasty.success('Lançamento adicionado com sucesso!');
+        // limpa o form
+        // form.reset();
+        // this.lancamento = new Lancamento();
 
-        form.reset();
-        this.lancamento = new Lancamento();
+        // faz o redirect para outra URL de edicao de lancamento
+        this.router.navigate(['lancamentos/', newLancamento.id]);
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
@@ -109,6 +114,13 @@ export class LancamentoCadastroComponent implements OnInit {
         this.toasty.success('Lançamento alterado com sucesso!');
       })
       .catch(erro => this.errorHandler.handle(erro));
-}
+  }
+
+  novo (form: FormControl) {
+    // limpa o form
+    form.reset();
+    this.lancamento = new Lancamento();
+    this.router.navigate(['lancamentos/novo']);
+  }
 
 }

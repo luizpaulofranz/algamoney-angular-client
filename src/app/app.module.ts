@@ -14,6 +14,8 @@ import { LancamentoCadastroComponent } from './lancamentos/lancamento-cadastro/l
 import { PessoasPesquisaComponent } from './pessoas/pessoas-pesquisa/pessoas-pesquisa.component';
 
 const routes: Routes = [
+  // a raiz do app direciona para cá, pathMatch padrao é prefix
+  { path: '', redirectTo: 'lancamentos', pathMatch: 'full' },
   { path: 'lancamentos', component: LancamentosPesquisaComponent },
   { path: 'lancamentos/novo', component: LancamentoCadastroComponent },
   // passando parametros via URL, precisamos pegar isso no LancamentoCadastroComponent
