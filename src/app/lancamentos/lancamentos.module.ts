@@ -40,11 +40,7 @@ import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos
     LancamentosPesquisaComponent,
     LancamentoCadastroComponent
   ],
-  exports: [
-    LancamentoCadastroComponent,
-    LancamentosPesquisaComponent,
-    FormsModule
-  ],
+  exports: [ ],
   providers: [LancamentoService]
 })
 export class LancamentosModule { }
