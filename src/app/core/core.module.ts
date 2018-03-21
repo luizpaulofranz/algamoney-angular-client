@@ -1,3 +1,4 @@
+import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -29,7 +30,7 @@ registerLocaleData(localePt, 'pt-BR');
     ConfirmDialogModule,
   ],
   declarations: [
-    NavbarComponent
+    NavbarComponent, PaginaNaoEncontradaComponent
   ],
   exports: [
     NavbarComponent,
