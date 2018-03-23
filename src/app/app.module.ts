@@ -22,13 +22,13 @@ import { PaginaNaoEncontradaComponent } from './core/pagina-nao-encontrada.compo
     BrowserModule,
     BrowserAnimationsModule,
     HttpModule,
-    // modulo que contem as rotas globais
-    AppRoutingModule,
 
     // modulo que contem os componentes que sao usados apenas pelo AppComponent, como cabecalho
     CoreModule,
     LancamentosModule,
-    PessoasModule
+    PessoasModule,
+    // modulo que contem as rotas globais, deve ser o ultimo import
+    AppRoutingModule
   ],
   bootstrap: [AppComponent]
 })

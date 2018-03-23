@@ -3,7 +3,6 @@ import { LancamentoService } from './lancamento.service';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 
 import { CalendarModule } from 'primeng/components/calendar/calendar';
 import { InputTextModule } from 'primeng/components/inputtext/inputtext';
@@ -33,9 +32,9 @@ import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos
     SelectButtonModule,
     DropdownModule,
     CurrencyMaskModule,
-    LancamentosRoutingModule,
-
-    SharedModule
+    SharedModule,
+    // colocar router sempre por ultimo
+    LancamentosRoutingModule
   ],
   declarations: [
     LancamentosPesquisaComponent,
