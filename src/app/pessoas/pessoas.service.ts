@@ -74,6 +74,33 @@ export class PessoasService {
       .then(response => response.json());
   }
 
+  getById(id: number): Promise<Pessoa> {
+    const headers = new Headers();
+    headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+    return this.http.get(`${this.pessoasUrl}/${id}`, { headers })
+      .toPromise()
+      .then(response => {
+        // convertemos o json em uma classe
+        const retorno = response.json() as Pessoa;
+        return retorno;
+      });
+  }
+
+  atualizar(pessoa: Pessoa): Promise<Pessoa> {
+    const headers = new Headers();
+    headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+    headers.append('Content-Type', 'application/json');
+    pessoa.ativo = true;
+    return this.http.put(`${this.pessoasUrl}/${pessoa.id}`,
+        // o body eh string
+        JSON.stringify(pessoa), { headers })
+      .toPromise()
+      .then(response => {
+        const retorno = response.json() as Pessoa;
+        return retorno;
+      });
+  }
+
 }
 
 /**

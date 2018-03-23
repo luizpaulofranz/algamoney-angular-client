@@ -53,6 +53,7 @@ export class LancamentoCadastroComponent implements OnInit {
     this.carregarPessoas();
   }
 
+  // verifica se estamos editando, o get permite acessar "editando no template"
   get editando() {
     return Boolean(this.lancamento.id);
   }
@@ -114,7 +115,7 @@ export class LancamentoCadastroComponent implements OnInit {
 
   atualizarLancamento(form: FormControl) {
     this.lancamentoService.atualizar(this.lancamento)
-      .then(lancamento => {
+      .then((lancamento) => {
         this.lancamento = lancamento;
 
         this.toasty.success('Lançamento alterado com sucesso!');

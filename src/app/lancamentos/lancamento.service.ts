@@ -70,7 +70,6 @@ export class LancamentoService {
       .then(response => {
         // convertemos o json em uma classe
         const retorno = response.json() as Lancamento;
-        console.log(retorno);
         // convertemos a data para objeto
         this.stringToDate([retorno]);
         return retorno;
@@ -81,16 +80,12 @@ export class LancamentoService {
     const headers = new Headers();
     headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
     headers.append('Content-Type', 'application/json');
-    console.log('entrou');
-    console.log(lancamento);
     return this.http.put(`${this.lancamentosUrl}/${lancamento.id}`,
         // o body eh string
         JSON.stringify(lancamento), { headers })
       .toPromise()
-      .then(response => {
+      .then((response) => {
         const retorno = response.json() as Lancamento;
-        console.log('retorno');
-        console.log(retorno);
         // convertemos a data
         this.stringToDate([retorno]);
         return retorno;

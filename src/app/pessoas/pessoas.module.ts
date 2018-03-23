@@ -1,3 +1,4 @@
+import { PessoasRoutingModule } from './pessoas-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -23,8 +24,8 @@ import { InputMaskModule } from 'primeng/components/inputmask/inputmask';
     DataTableModule,
     TooltipModule,
     InputMaskModule,
-
-    SharedModule
+    SharedModule,
+    PessoasRoutingModule
   ],
   declarations: [
     PessoasPesquisaComponent,
