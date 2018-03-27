@@ -1,12 +1,13 @@
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+
+import { ButtonModule } from 'primeng/components/button/button';
+import { InputTextModule } from 'primeng/components/inputtext/inputtext';
 
 import { SegurancaRoutingModule } from './seguranca-routing.module';
 import { LoginFormComponent } from './login-form/login-form.component';
-
-import { InputTextModule } from 'primeng/components/inputtext/inputtext';
-import { ButtonModule } from 'primeng/components/button/button';
+import { AuthService } from './auth.service';
 
 @NgModule({
   imports: [
@@ -15,9 +16,11 @@ import { ButtonModule } from 'primeng/components/button/button';
 
     InputTextModule,
     ButtonModule,
-    // sempre o ultimo
+    // rotas sempre por ultimo
     SegurancaRoutingModule
   ],
-  declarations: [LoginFormComponent]
+  declarations: [LoginFormComponent],
+  // nunca esqueca de colocar os services nos providers
+  providers: [AuthService]
 })
 export class SegurancaModule { }
