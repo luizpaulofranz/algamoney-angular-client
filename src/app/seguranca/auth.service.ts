@@ -1,6 +1,7 @@
 /* Classe responsavel por fazer as autenticacoes OAuth */
 import { Http, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
+import { JwtHelper } from 'angular2-jwt';
 
 // import 'rxjs/add/operator/toPromise';
 
@@ -8,8 +9,15 @@ import { Injectable } from '@angular/core';
 export class AuthService {
 
   oauthTokenUrl = 'http://localhost:8080/oauth/token';
+  jwtPayload: any;
 
-  constructor(private http: Http) { }
+  constructor(
+    private http: Http,
+    private jwtHelper: JwtHelper
+  ) {
+    // caso o token de acesso ja exista, deixa o JWT ja carregado e decodificado
+    this.recarregarToken();
+   }
 
   login(usuario: string, senha: string): Promise<void> {
     const headers = new Headers();
@@ -26,10 +34,25 @@ export class AuthService {
       .toPromise()
       .then(response => {
         console.log(response);
+        this.armazenarToken(response.json().access_token);
       })
       .catch(response => {
         console.log(response);
       });
+  }
+
+  /* Esse metodo decodifica o JWT token e armazena no local-storage do browser */
+  private armazenarToken(token: string) {
+    this.jwtPayload = this.jwtHelper.decodeToken(token);
+    localStorage.setItem('token', token);
+  }
+
+  /* Pega o token armazenado no localStorage e decodifica */
+  private recarregarToken() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.armazenarToken(token);
+    }
   }
 
 }
