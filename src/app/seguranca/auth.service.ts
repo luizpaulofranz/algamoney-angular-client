@@ -33,11 +33,20 @@ export class AuthService {
     return this.http.post(this.oauthTokenUrl, body, { headers })
       .toPromise()
       .then(response => {
-        console.log(response);
+        // login correto, retorna um json e na posicao access_token ...
         this.armazenarToken(response.json().access_token);
       })
       .catch(response => {
-        console.log(response);
+        // login errado
+        if (response.status === 400) {
+          const responseJson = response.json();
+          if (responseJson.error === 'invalid_grant') {
+            // isso vai acabar sendo tratado lah no ErrorHandler, com esse erro
+            return Promise.reject('Usuário ou senha inválidos!');
+          }
+        }
+        // aqui simplesmente passamos o response para o ErrorHandler
+        return Promise.reject(response);
       });
   }
 
