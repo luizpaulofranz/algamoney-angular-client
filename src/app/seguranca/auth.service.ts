@@ -9,6 +9,7 @@ import { JwtHelper } from 'angular2-jwt';
 export class AuthService {
 
   oauthTokenUrl = 'http://localhost:8080/oauth/token';
+  // aqui esta as informacoes passadas pelo JWT
   jwtPayload: any;
 
   constructor(
@@ -17,7 +18,14 @@ export class AuthService {
   ) {
     // caso o token de acesso ja exista, deixa o JWT ja carregado e decodificado
     this.recarregarToken();
-   }
+  }
+
+  /* Verifica se o TOKEN atual (usuario logado) tem a permissao passada por parametro
+  dentro do payload do JWT, a posicao authorities tem um array de strings
+  que sao as permissoes, no formato ROLE_PESQUISAR_LANCAMENTO */
+  hasPermission(permissao: string) {
+    return this.jwtPayload && this.jwtPayload.authorities.includes(permissao);
+  }
 
   login(usuario: string, senha: string): Promise<void> {
     const headers = new Headers();
