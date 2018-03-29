@@ -6,17 +6,18 @@ import 'rxjs/add/operator/toPromise';
 // importe tudo desse local e dê o apelido de "moment"
 import * as moment from 'moment';
 import { Lancamento } from '../core/model';
+import { AuthHttp } from 'angular2-jwt';
 
 @Injectable()
 export class LancamentoService {
 
   lancamentosUrl = 'http://localhost:8080/lancamentos';
 
-  constructor(private http: Http) { }
+  constructor(private http: AuthHttp) { }
 
   pesquisar(filtro: LancamentoFiltro): Promise<any> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+    // const headers = new Headers();
+    // headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
     // para conter nossos filtros na URL
     const params = new URLSearchParams();
 
@@ -37,7 +38,7 @@ export class LancamentoService {
     // passamos os headers e os filtros
     // lembrando que "headers" eh um atalho para "headers: headers"
     // quando a chave e o nome da variavel sao iguais
-    return this.http.get(`${this.lancamentosUrl}?resumo`, { headers, search: params })
+    return this.http.get(`${this.lancamentosUrl}?resumo`, { search: params })
       .toPromise()
       .then(response => response.json());
   }
