@@ -16,7 +16,6 @@ import { CategoriaService } from '../categoria/categoria.service';
 import { ToastyModule } from 'ng2-toasty';
 import { ConfirmDialogModule } from 'primeng/components/confirmdialog/confirmdialog';
 import { ConfirmationService } from 'primeng/components/common/confirmationservice';
-import { JwtHelper } from 'angular2-jwt';
 
 // E por fim, registre o localePt como 'pt-BR'
 registerLocaleData(localePt, 'pt-BR');
@@ -47,9 +46,7 @@ registerLocaleData(localePt, 'pt-BR');
     // Servico para alterar o titulo das nossas paginas
     Title,
     // Provider Por Valor
-    { provide: LOCALE_ID, useValue: 'pt-BR' },
-    // Service usado para manipular tokens JWT
-    JwtHelper
+    { provide: LOCALE_ID, useValue: 'pt-BR' }
   ]
 })
 export class CoreModule { }

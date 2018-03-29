@@ -53,6 +53,7 @@ export class AuthService {
   /* Esse metodo decodifica o JWT token e armazena no local-storage do browser */
   private armazenarToken(token: string) {
     this.jwtPayload = this.jwtHelper.decodeToken(token);
+    // o nome do storage deve ser token para o jwt-angular2 funcionar
     localStorage.setItem('token', token);
   }
 

@@ -1,4 +1,4 @@
-import { Http, Headers, URLSearchParams } from '@angular/http';
+import { URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
 
 import 'rxjs/add/operator/toPromise';
@@ -16,11 +16,7 @@ export class LancamentoService {
   constructor(private http: AuthHttp) { }
 
   pesquisar(filtro: LancamentoFiltro): Promise<any> {
-    // const headers = new Headers();
-    // headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
-    // para conter nossos filtros na URL
     const params = new URLSearchParams();
-
     // adicionamos os parametros da paginacao
     params.set('page', filtro.pagina.toString());
     params.set('size', filtro.itens.toString());
@@ -35,38 +31,29 @@ export class LancamentoService {
     if (filtro.descricao) {
       params.set('descricao', filtro.descricao);
     }
-    // passamos os headers e os filtros
-    // lembrando que "headers" eh um atalho para "headers: headers"
-    // quando a chave e o nome da variavel sao iguais
+    // passamos os filtros
+    // lembrando que o Header Authorization eh inserido pelo AuthHttp
     return this.http.get(`${this.lancamentosUrl}?resumo`, { search: params })
       .toPromise()
       .then(response => response.json());
   }
 
   excluir(id: number): Promise<void> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
-
-    return this.http.delete(`${this.lancamentosUrl}/${id}`, { headers })
+    return this.http.delete(`${this.lancamentosUrl}/${id}`)
       .toPromise()
       .then(() => null);
   }
 
   adicionar(lancamento: Lancamento): Promise<Lancamento> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
-    headers.append('Content-Type', 'application/json');
     return this.http.post(this.lancamentosUrl,
         // o body eh string
-        JSON.stringify(lancamento), { headers })
+        JSON.stringify(lancamento))
       .toPromise()
       .then(response => response.json());
   }
 
   getById(id: number): Promise<Lancamento> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
-    return this.http.get(`${this.lancamentosUrl}/${id}`, { headers })
+    return this.http.get(`${this.lancamentosUrl}/${id}`)
       .toPromise()
       .then(response => {
         // convertemos o json em uma classe
@@ -78,12 +65,9 @@ export class LancamentoService {
   }
 
   atualizar(lancamento: Lancamento): Promise<Lancamento> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
-    headers.append('Content-Type', 'application/json');
     return this.http.put(`${this.lancamentosUrl}/${lancamento.id}`,
         // o body eh string
-        JSON.stringify(lancamento), { headers })
+        JSON.stringify(lancamento))
       .toPromise()
       .then((response) => {
         const retorno = response.json() as Lancamento;

@@ -1,7 +1,8 @@
-import { Http, Headers, URLSearchParams } from '@angular/http';
+import { URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
 
 import 'rxjs/add/operator/toPromise';
+import { AuthHttp } from 'angular2-jwt';
 
 // importe tudo desse local e dê o apelido de "moment"
 import * as moment from 'moment';
@@ -12,11 +13,9 @@ export class PessoasService {
 
   pessoasUrl = 'http://localhost:8080/pessoas';
 
-  constructor(private http: Http) { }
+  constructor(private http: AuthHttp) { }
 
   pesquisar(filtro: PessoaFiltro): Promise<any> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
     // para conter nossos filtros na URL
     const params = new URLSearchParams();
 
@@ -27,57 +26,42 @@ export class PessoasService {
     if (filtro.nome) {
       params.set('nome', filtro.nome);
     }
-    // passamos os headers e os filtros
-    // lembrando que "headers" eh um atalho para "headers: headers"
-    // quando a chave e o nome da variavel sao iguais
-    return this.http.get(`${this.pessoasUrl}`, { headers, search: params })
+    // passamos os filtros
+    // lembrando que o Header Authentication eh inserido globalmente
+    // pelo servico AuthHttp, configurado e provido no SegurancaModule
+    return this.http.get(`${this.pessoasUrl}`, { search: params })
       .toPromise()
       .then(response => response.json());
   }
 
   // metodo usado para popular o combo box de pessoas
   listarTodas(): Promise<any> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
-
-    return this.http.get(this.pessoasUrl, { headers })
+    return this.http.get(this.pessoasUrl)
       .toPromise()
       .then(response => response.json().content);
   }
 
   excluir(id: number): Promise<any> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
-
-    return this.http.delete(`${this.pessoasUrl}/${id}`, { headers })
+    return this.http.delete(`${this.pessoasUrl}/${id}`)
       .toPromise()
       .then(() => null);
   }
 
   inverterStatus ( id: number, status: boolean): Promise<any> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
-    headers.append('Content-Type', 'application/json');
     // o segundo parametro eh o corpo da mensagem
-    return this.http.put(`${this.pessoasUrl}/${id}/ativo`, status, { headers })
+    return this.http.put(`${this.pessoasUrl}/${id}/ativo`, status)
       .toPromise()
       .then(() => null);
   }
 
   adicionar(pessoa: Pessoa): Promise<Pessoa> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
-    headers.append('Content-Type', 'application/json');
-
-    return this.http.post(this.pessoasUrl, JSON.stringify(pessoa), { headers })
+    return this.http.post(this.pessoasUrl, JSON.stringify(pessoa))
       .toPromise()
       .then(response => response.json());
   }
 
   getById(id: number): Promise<Pessoa> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
-    return this.http.get(`${this.pessoasUrl}/${id}`, { headers })
+    return this.http.get(`${this.pessoasUrl}/${id}`)
       .toPromise()
       .then(response => {
         // convertemos o json em uma classe
@@ -87,13 +71,10 @@ export class PessoasService {
   }
 
   atualizar(pessoa: Pessoa): Promise<Pessoa> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
-    headers.append('Content-Type', 'application/json');
     pessoa.ativo = true;
     return this.http.put(`${this.pessoasUrl}/${pessoa.id}`,
         // o body eh string
-        JSON.stringify(pessoa), { headers })
+        JSON.stringify(pessoa))
       .toPromise()
       .then(response => {
         const retorno = response.json() as Pessoa;
