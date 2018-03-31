@@ -58,6 +58,37 @@ export class AuthService {
       });
   }
 
+  /* Verifica se o token ja expirou  */
+  isAccessTokenInvalid() {
+    const token = localStorage.getItem('token');
+    return !token || this.jwtHelper.isTokenExpired(token);
+  }
+
+  /* Pega um novo access token usando o Refresh Token
+  o refresh token esta nos cookies*/
+  getNewAccessToken() {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    headers.append('Authorization', 'Basic YW5ndWxhcjpAbmd1bEByMA==');
+    // infomamos a API que deve gerar um novo access token
+    const body = 'grant_type=refresh_token';
+
+    return this.http.post(this.oauthTokenUrl, body,
+        { headers, withCredentials: true })
+      .toPromise()
+      .then(response => {
+        this.armazenarToken(response.json().access_token);
+
+        console.log('Novo access token criado!');
+
+        return Promise.resolve(null);
+      })
+      .catch(response => {
+        console.error('Erro ao renovar token.', response);
+        return Promise.resolve(null);
+      });
+  }
+
   /* Esse metodo decodifica o JWT token e armazena no local-storage do browser */
   private armazenarToken(token: string) {
     this.jwtPayload = this.jwtHelper.decodeToken(token);
