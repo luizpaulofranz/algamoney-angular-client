@@ -38,7 +38,8 @@ export class AuthService {
     // esses sao os dados exigidos pelo Oauth
     const body = `username=${usuario}&password=${senha}&grant_type=password`;
 
-    return this.http.post(this.oauthTokenUrl, body, { headers })
+    // withCredentials: true eh para carregar o cookie no cross-origin
+    return this.http.post(this.oauthTokenUrl, body, { headers, withCredentials: true })
       .toPromise()
       .then(response => {
         // login correto, retorna um json e na posicao access_token ...
@@ -74,7 +75,7 @@ export class AuthService {
     const body = 'grant_type=refresh_token';
 
     return this.http.post(this.oauthTokenUrl, body,
-        { headers, withCredentials: true })
+        { headers, withCredentials: true }) // withCredentials eh para tratar cross site
       .toPromise()
       .then(response => {
         this.armazenarToken(response.json().access_token);
