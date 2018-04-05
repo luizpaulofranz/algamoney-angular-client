@@ -10,6 +10,7 @@ import { AuthConfig, AuthHttp, JwtHelper } from 'angular2-jwt';
 import { Observable } from 'rxjs/Observable';
 
 import { AuthService } from './auth.service';
+import { ExpiredRefreshTokenError } from './../core/error-handler.service';
 
 @Injectable()
 export class MoneyHttp extends AuthHttp {
@@ -63,6 +64,11 @@ export class MoneyHttp extends AuthHttp {
       // criamos um novo access token
       const chamadaNovoAccessToken = this.auth.getNewAccessToken()
         .then(() => {
+          // se ainda estiver invalido, quer dizer que o refrestoken expirou
+          if (this.auth.isAccessTokenInvalid()) {
+            // lancammos uma excecao que nos criamos
+            throw new ExpiredRefreshTokenError();
+          }
           return fn().toPromise();
         });
 

@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 
 import { ToastyService } from 'ng2-toasty';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class ErrorHandlerService {
 
   constructor(
-    private toasty: ToastyService
+    private toasty: ToastyService,
+    private router: Router
   ) { }
 
   handle(errorResponse: any) {
@@ -14,6 +16,11 @@ export class ErrorHandlerService {
 
     if (typeof errorResponse === 'string') {
       msg = errorResponse;
+
+    // aqui tratamos o erro de RefreshToken expirado
+    } else if (errorResponse instanceof ExpiredRefreshTokenError) {
+      msg = 'Sua sessão expirou!';
+      this.router.navigate(['/login']);
 
     // esse if nao funcionou nao sei por que
     // } else if (errorResponse instanceof Response && errorResponse.status >= 400 && errorResponse.status < 500) {
@@ -41,3 +48,5 @@ export class ErrorHandlerService {
   }
 
 }
+
+export class ExpiredRefreshTokenError {}
