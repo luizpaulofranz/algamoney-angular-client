@@ -1,4 +1,3 @@
-import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -12,6 +11,8 @@ import { registerLocaleData } from '@angular/common';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ErrorHandlerService } from './error-handler.service';
 import { CategoriaService } from '../categoria/categoria.service';
+import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
+import { NaoAutorizadoComponent } from './nao-autorizado.component';
 
 import { ToastyModule } from 'ng2-toasty';
 import { ConfirmDialogModule } from 'primeng/components/confirmdialog/confirmdialog';
@@ -31,7 +32,7 @@ registerLocaleData(localePt, 'pt-BR');
     ConfirmDialogModule,
   ],
   declarations: [
-    NavbarComponent, PaginaNaoEncontradaComponent
+    NavbarComponent, PaginaNaoEncontradaComponent, NaoAutorizadoComponent
   ],
   exports: [
     NavbarComponent,

@@ -27,6 +27,16 @@ export class AuthService {
     return this.jwtPayload && this.jwtPayload.authorities.includes(permissao);
   }
 
+  hasAnyPermission(permissoes: string[]) {
+    for (const role of permissoes) {
+      if (this.hasPermission(role)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   login(usuario: string, senha: string): Promise<void> {
     const headers = new Headers();
     // esse content type eh para usarmos o body daquela forma
