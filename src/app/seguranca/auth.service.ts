@@ -33,7 +33,6 @@ export class AuthService {
         return true;
       }
     }
-
     return false;
   }
 
@@ -105,6 +104,11 @@ export class AuthService {
     this.jwtPayload = this.jwtHelper.decodeToken(token);
     // o nome do storage deve ser token para o jwt-angular2 funcionar
     localStorage.setItem('token', token);
+  }
+
+  limparAccessToken() {
+    localStorage.removeItem('token');
+    this.jwtPayload = null;
   }
 
   /* Pega o token armazenado no localStorage e decodifica */

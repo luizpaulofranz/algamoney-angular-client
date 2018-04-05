@@ -12,6 +12,7 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { AuthService } from './auth.service';
 import { MoneyHttp } from './money-http';
 import { AuthGuard } from './auth.guard';
+import { LogoutService } from './logout-service';
 
 /* Factory para criar o service MoneyHttp que extende AuthHttp. AuthHttp depende dos Servicos nativos
 de Http do Angular e intercepta nossas chamadas Http e acrescenta os Headers do token (Authorization)
@@ -57,7 +58,9 @@ export function authHttpServiceFactory(auth: AuthService, http: Http, options: R
       deps: [AuthService, Http, RequestOptions] // e depende dessas classes
     },
     // esse service verifica se o usuario logado tem permissao para acessar determinada rota
-    AuthGuard
+    AuthGuard,
+    // servico que apenas implementa o logout
+    LogoutService
   ]
 })
 export class SegurancaModule { }
