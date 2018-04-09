@@ -7,11 +7,11 @@ import { AuthHttp } from 'angular2-jwt';
 // importe tudo desse local e dê o apelido de "moment"
 import * as moment from 'moment';
 import { Pessoa } from '../core/model';
+import { environment } from './../../environments/environment';
 
 @Injectable()
 export class PessoasService {
-
-  pessoasUrl = 'http://localhost:8080/pessoas';
+  pessoasUrl = `${environment.apiUrl}/pessoas`;
 
   constructor(private http: AuthHttp) { }
 

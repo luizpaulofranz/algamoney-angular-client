@@ -7,11 +7,12 @@ import 'rxjs/add/operator/toPromise';
 import * as moment from 'moment';
 import { Lancamento } from '../core/model';
 import { AuthHttp } from 'angular2-jwt';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class LancamentoService {
 
-  lancamentosUrl = 'http://localhost:8080/lancamentos';
+  lancamentosUrl = `${environment.apiUrl}/lancamentos`;
 
   constructor(private http: AuthHttp) { }
 

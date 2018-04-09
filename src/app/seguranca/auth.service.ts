@@ -4,11 +4,12 @@ import { Injectable } from '@angular/core';
 import { JwtHelper } from 'angular2-jwt';
 
 // import 'rxjs/add/operator/toPromise';
+import { environment } from './../../environments/environment.prod';
 
 @Injectable()
 export class AuthService {
 
-  oauthTokenUrl = 'http://localhost:8080/oauth/token';
+  oauthTokenUrl = `${environment.apiUrl}/oauth/token`;
   // aqui esta as informacoes passadas pelo JWT
   jwtPayload: any;
 
