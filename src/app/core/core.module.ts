@@ -15,8 +15,8 @@ import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component'
 import { NaoAutorizadoComponent } from './nao-autorizado.component';
 
 import { ToastyModule } from 'ng2-toasty';
-import { ConfirmDialogModule } from 'primeng/components/confirmdialog/confirmdialog';
-import { ConfirmationService } from 'primeng/components/common/confirmationservice';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 
 // E por fim, registre o localePt como 'pt-BR'
 registerLocaleData(localePt, 'pt-BR');

@@ -40,44 +40,48 @@
       <!--Passamos o array de lancamentos como parametro para esse componente do primeng
       LazyLoad, total records eh o numero total de lancamentos, nao da pagina, usa para montar a paginacao
       onLazyLoad eh executado sempre que navegamos na paginacao, e eh executado quando a pagina carrega-->
-      <p-dataTable [paginator]="true" lazy="true" [responsive]="true"
+      <p-table [paginator]="true" lazy="true" [responsive]="true"
       [value]="lancamentos" [rows]="filter.itens" [totalRecords]="totalRegistros"
       (onLazyLoad)="currentPage($event)"
-      emptyMessage="Nenhum registro foi encontrado!"
       #table>
-        <!--aqui acessamos uma propriedade de Lancamento-->
-        <p-column field="pessoa" header="Pessoa"></p-column>
-        <p-column field="descricao" header="Descrição"></p-column>
-        <p-column header="Vencimento" styleClass="col-data">
-          <ng-template let-lanc="rowData" pTemplate="body">
-              <span>{{ lanc.dataVencimento | date:'dd/MM/yyyy' }}</span>
-          </ng-template>
-        </p-column>
-        <p-column header="Pagamento" styleClass="col-data">
-          <ng-template let-lanc="rowData" pTemplate="body">
-              <span>{{ lanc.dataPagamento | date:'dd/MM/yyyy' }}</span>
-          </ng-template>
-        </p-column>
-        <p-column field="valor" header="Valor" styleClass="col-valor">
-          <!--body altera as celulas, header apenas o cabecalho da tabela-->
-          <!--aqui criamos uma variavel "lanc" pegando os dados do p-dataTable-->
-          <ng-template let-lanc="rowData" pTemplate="body">
-            <span [style.color]="lanc.tipo==='DESPESA'?'red':'blue'">{{lanc.valor | number:'1.2-2'}}</span>
-          </ng-template>
-        </p-column>
 
-        <p-column styleClass="col-actions">
-            <ng-template pTemplate="body" let-lanc="rowData">
-              <!--usando icones do fonts-awesome-->
-              <a pButton icon="fa-pencil" pTooltip="Editar" tooltipPosition="top"
-              [routerLink]="['/lancamentos', lanc.codigo]"></a>
-              <button pButton icon="fa-trash" pTooltip="Excluir"
-                tooltipPosition="top" (click)="confirmarExclusao(lanc)"
-                [disabled]="!auth.hasPermission('ROLE_REMOVER_LANCAMENTO')"></button>
-            </ng-template>
-        </p-column>
+      <!--Nova forma com o turbotable-->
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Pessoa</th>
+          <th>Descrição</th>
+          <th class="col-data-header">Vencimento</th>
+          <th class="col-data-header">Pagamento</th>
+          <th class="col-valor-header">Valor</th>
+          <th class="col-acoes-header">Ações</th>
+        </tr>
+      </ng-template>
 
-      </p-dataTable>
+      <ng-template pTemplate="body" let-lancamento>
+        <tr>
+          <td>{{ lancamento.pessoa }}</td>
+          <td>{{ lancamento.descricao }}</td>
+          <td class="col-data">{{ lancamento.dataVencimento | date:'dd/MM/yyyy' }}</td>
+          <td class="col-data">{{ lancamento.dataPagamento | date:'dd/MM/yyyy' }}</td>
+          <td class="col-valor" [style.color]="lancamento.tipo==='DESPESA'?'red':'blue'">{{ lancamento.valor | number:'1.2-2' }}</td>
+          <td class="col-acoes">
+            <!--usando icones do fonts-awesome-->
+            <button pButton icon="fa-pencil" pTooltip="Editar" tooltipPosition="top"
+            [routerLink]="['/lancamentos', lancamento.codigo]"></button>
+            <button pButton icon="fa-trash" pTooltip="Excluir"
+              tooltipPosition="top" (click)="confirmarExclusao(lancamento)"
+              [disabled]="!auth.hasPermission('ROLE_REMOVER_LANCAMENTO')"></button>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="6">Nenhum Lançamento Encontrado!</td>
+        </tr>
+      </ng-template>
+
+      </p-table>
 
 
     </div>

@@ -4,14 +4,14 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
-import { CalendarModule } from 'primeng/components/calendar/calendar';
-import { InputTextModule } from 'primeng/components/inputtext/inputtext';
-import { InputTextareaModule } from 'primeng/components/inputtextarea/inputtextarea';
-import { ButtonModule } from 'primeng/components/button/button';
-import { DataTableModule } from 'primeng/components/datatable/datatable';
-import { TooltipModule } from 'primeng/components/tooltip/tooltip';
-import { SelectButtonModule } from 'primeng/components/selectbutton/selectbutton';
-import { DropdownModule } from 'primeng/components/dropdown/dropdown';
+import { CalendarModule } from 'primeng/calendar';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
+import { TooltipModule } from 'primeng/tooltip';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { DropdownModule } from 'primeng/dropdown';
 
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 
@@ -25,7 +25,7 @@ import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos
     FormsModule,
     InputTextModule,
     ButtonModule,
-    DataTableModule,
+    TableModule,
     TooltipModule,
     InputTextareaModule,
     CalendarModule,

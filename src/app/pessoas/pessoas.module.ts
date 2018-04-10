@@ -8,12 +8,12 @@ import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.co
 import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.component';
 import { PessoasService } from './pessoas.service';
 
-import { DropdownModule } from 'primeng/components/dropdown/dropdown';
-import { InputTextModule } from 'primeng/components/inputtext/inputtext';
-import { ButtonModule } from 'primeng/components/button/button';
-import { DataTableModule } from 'primeng/components/datatable/datatable';
-import { TooltipModule } from 'primeng/components/tooltip/tooltip';
-import { InputMaskModule } from 'primeng/components/inputmask/inputmask';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { DataTableModule } from 'primeng/datatable';
+import { TooltipModule } from 'primeng/tooltip';
+import { InputMaskModule } from 'primeng/inputmask';
 
 @NgModule({
   imports: [
