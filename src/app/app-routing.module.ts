@@ -9,9 +9,13 @@ import { PessoasPesquisaComponent } from './pessoas/pessoas-pesquisa/pessoas-pes
 import { NaoAutorizadoComponent } from './core/nao-autorizado.component';
 
 const routes: Routes = [
+  // assim configuramos o lazy-loading de modulos inteiros
+  // configuramos tbm as rotas dos children em seus respectivos modulos
+  { path: 'lancamentos', loadChildren: 'app/lancamentos/lancamentos.module#LancamentosModule' },
+  { path: 'pessoas', loadChildren: 'app/pessoas/pessoas.module#PessoasModule' },
+
   // a raiz do app direciona para cá, pathMatch padrao é prefix
   { path: '', redirectTo: 'lancamentos', pathMatch: 'full' },
-  { path: 'pessoas', component: PessoasPesquisaComponent },
   { path: 'nao-autorizado', component: NaoAutorizadoComponent },
   { path: 'pagina-nao-encontrada', component: PaginaNaoEncontradaComponent },
   // pagina nao encontrada

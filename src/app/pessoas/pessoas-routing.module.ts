@@ -12,7 +12,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'pessoas',
+    // "pessoas" foi adicionado no app-routing.module, por isso vazio
+    path: '',
     component: PessoasPesquisaComponent,
     // com isso adicionamos Guards a essa rota
     canActivate: [AuthGuard],
@@ -21,14 +22,15 @@ const routes: Routes = [
     data: { roles: ['ROLE_PESQUISAR_PESSOA'] }
   },
   {
-    path: 'pessoas/nova',
+    // isso se torna pessoa/nova
+    path: 'nova',
     component: PessoaCadastroComponent,
     canActivate: [AuthGuard],
     data: { roles: ['ROLE_CADASTRAR_PESSOA'] }
   },
   {
     // passando parametros via URL, precisamos pegar isso no PessoaCadastroComponent
-    path: 'pessoas/:id',
+    path: ':id',
     component: PessoaCadastroComponent,
     canActivate: [AuthGuard],
     data: { roles: ['ROLE_CADASTRAR_PESSOA'] }

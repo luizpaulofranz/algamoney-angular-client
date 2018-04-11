@@ -11,7 +11,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'lancamentos',
+    // "lancamentos" foi adicionado no app-routing.module, por isso vazio
+    path: '',
     component: LancamentosPesquisaComponent,
     // com isso adicionamos guardas a essa rota especifica
     canActivate: [AuthGuard],
@@ -19,14 +20,15 @@ const routes: Routes = [
     data: { roles: ['ROLE_PESQUISAR_LANCAMENTO'] }
   },
   {
-    path: 'lancamentos/novo',
+    // isso se torna lancamentos/novo
+    path: 'novo',
     component: LancamentoCadastroComponent,
     canActivate: [AuthGuard],
     data: { roles: ['ROLE_CADASTRAR_LANCAMENTO'] }
   },
   {
     // assim passamos parametros, precisamos tratar no Component .ts
-    path: 'lancamentos/:id',
+    path: ':id',
     component: LancamentoCadastroComponent,
     canActivate: [AuthGuard],
     data: { roles: ['ROLE_CADASTRAR_LANCAMENTO'] }
