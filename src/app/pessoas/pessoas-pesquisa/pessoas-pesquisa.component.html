@@ -25,36 +25,53 @@
     <div class="ui-g-12">
 
       <!--Passamos o array de pessoas como parametro para esse componente do primeng-->
-      <p-dataTable lazy="true" [value]="pessoas" [paginator]="true" #table
+      <p-table lazy="true" [value]="pessoas" [paginator]="true" #table
         [rows]="filter.itens" [responsive]="true" [totalRecords]="totalRegistros"
         (onLazyLoad)="currentPage($event)"
         emptyMessage="Nenhum registro foi encontrado!" >
 
-        <p-column field="nome" header="Nome"></p-column>
-        <p-column field="endereco.cidade" header="Cidade"></p-column>
-        <p-column field="endereco.estado" header="Estado"></p-column>
+        <!--Nova forma com o turbotable-->
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Nome</th>
+            <th>Cidade</th>
+            <th>Estado</th>
+            <th>Status</th>
+            <th class="col-acoes-header">Ações</th>
+          </tr>
+        </ng-template>
 
-        <p-column field="ativo" header="Status">
-          <!--body altera as celulas, header apenas o cabecalho da tabela-->
-          <!--aqui criamos uma variavel "pes" pegando os dados do p-dataTable-->
-          <ng-template let-pes="rowData" pTemplate="body">
-              <a href="javascript:;" [pTooltip]="pes.ativo ? 'Desativar' : 'Ativar'"
-                tooltipPosition="top" (click)="inverterStatus(pes)">
-                {{ pes.ativo ? 'Ativo' : 'Inativo' }}
+        <ng-template pTemplate="body" let-pessoa>
+          <tr>
+            <td>{{ pessoa.nome }}</td>
+            <td>{{ pessoa.endereco.cidade }}</td>
+            <td>{{ pessoa.endereco.estado }}</td>
+
+            <td>
+              <a href="javascript:;"
+                [pTooltip]="pessoa.ativo ? 'Desativar' : 'Ativar'"
+                tooltipPosition="top"
+                (click)="alternarStatus(pessoa)">
+                {{ pessoa.ativo ? 'Ativo' : 'Inativo' }}
               </a>
-          </ng-template>
-        </p-column>
+            </td>
 
-        <p-column styleClass="col-actions">
-            <ng-template pTemplate="body" let-pes="rowData">
+            <td class="col-acoes">
               <!--usando icones do fonts-awesome-->
-              <a pButton icon="fa-pencil" pTooltip="Editar" tooltipPosition="top"
-                [routerLink]="['/pessoas', pes.id]"></a>
-              <button pButton icon="fa-trash" pTooltip="Excluir" tooltipPosition="top" (click)="confirmarExclusao(pes)"></button>
-            </ng-template>
-        </p-column>
+              <button pButton icon="fa-pencil" pTooltip="Editar" tooltipPosition="top"
+                [routerLink]="['/pessoas', pessoa.id]"></button>
+              <button pButton icon="fa-trash" pTooltip="Excluir" tooltipPosition="top" (click)="confirmarExclusao(pessoa)"></button>
+            </td>
+          </tr>
+        </ng-template>
 
-      </p-dataTable>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6">Nenhum Lançamento Encontrado!</td>
+          </tr>
+        </ng-template>
+
+      </p-table>
 
 
     </div>
