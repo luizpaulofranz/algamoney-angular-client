@@ -18,6 +18,8 @@ import { ToastyModule } from 'ng2-toasty';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 
+import { PessoasService } from '../pessoas/pessoas.service';
+
 // E por fim, registre o localePt como 'pt-BR'
 registerLocaleData(localePt, 'pt-BR');
 
@@ -44,6 +46,7 @@ registerLocaleData(localePt, 'pt-BR');
     // esse service eh para manipular os Confir Dialogs
     ConfirmationService,
     CategoriaService,
+    PessoasService,
     // Servico para alterar o titulo das nossas paginas
     Title,
     // Provider Por Valor
