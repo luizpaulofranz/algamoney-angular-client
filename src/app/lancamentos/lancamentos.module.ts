@@ -1,7 +1,7 @@
 import { LancamentosRoutingModule } from './lancamentos-routing.module';
 import { LancamentoService } from './lancamento.service';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { CalendarModule } from 'primeng/calendar';
@@ -23,6 +23,7 @@ import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     InputTextModule,
     ButtonModule,
     TableModule,

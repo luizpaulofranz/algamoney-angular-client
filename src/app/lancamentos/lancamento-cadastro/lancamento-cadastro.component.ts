@@ -1,6 +1,7 @@
 import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+// monte de imports para formularios reativos
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import 'rxjs/add/operator/toPromise';
@@ -23,7 +24,10 @@ export class LancamentoCadastroComponent implements OnInit {
 
   public categorias = [];
   public pessoas = [];
-  public lancamento = new Lancamento();
+  // public lancamento = new Lancamento();
+
+  // objeto que contem o formulario reativo
+  public formulario: FormGroup;
 
   tipos = [
     { label: 'Receita', value: 'RECEITA' },
@@ -40,10 +44,14 @@ export class LancamentoCadastroComponent implements OnInit {
     private route: ActivatedRoute,
     // para fazer redirects
     private router: Router,
-    private title: Title
+    private title: Title,
+    // Para forms reativos
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit(): void {
+    // configuramos o form reativo
+    this.configForm();
     this.title.setTitle('Novo Lançamento');
     // assim pegamos dados das rotas
     const id = this.route.snapshot.params['id'];
@@ -53,9 +61,35 @@ export class LancamentoCadastroComponent implements OnInit {
     this.carregarPessoas();
   }
 
+  /* Configuracoes iniciais do form reativo */
+  configForm() {
+    this.formulario = this.formBuilder.group({
+      // campo do form: [valor inicial, validadores]
+      id: [],
+      tipo: ['RECEITA', Validators.required],
+      dataVencimento: [null, Validators.required],
+      dataPagamento: [],
+      descricao: [null, [Validators.required, Validators.minLength(5)]],
+      valor: [null, Validators.required],
+      // quando se trata de um "nested object" criamos outro grupo
+      pessoa: this.formBuilder.group({
+        id: [null, Validators.required],
+        nome: []
+      }),
+      categoria: this.formBuilder.group({
+        id: [null, Validators.required],
+        nome: []
+      }),
+      observacao: []
+    });
+  }
+
   // verifica se estamos editando, o get permite acessar "editando no template"
   get editando() {
-    return Boolean(this.lancamento.id);
+    // return Boolean(this.lancamento.id);
+
+    // assim recuperamos propriedades de formularios reativos
+    return Boolean(this.formulario.get('id').value);
   }
 
   carregarLancamento(id: number) {
@@ -63,7 +97,13 @@ export class LancamentoCadastroComponent implements OnInit {
       this.lancamentoService.getById(id).then(
         // quando resolver a promise, atribuimos ao nosso lancamento
         response => {
-        this.lancamento = response;
+        // this.lancamento = response;
+
+        // setamos dados no form reativo
+        // this.formulario.setValue(response);
+        // patchValue atualiza apenas a propriedades declaradas em formulario
+        // setValue sobrescreve essas propriedades
+        this.formulario.patchValue(response);
         // atualizmo o titulo da pagina
         this.getPageTitleOnEdit();
       }).catch(error => this.errorHandler.handle(error));
@@ -91,16 +131,17 @@ export class LancamentoCadastroComponent implements OnInit {
   }
 
   // trata se eh edicao ou novo
-  salvar(form: FormControl) {
+  salvar() {
     if (this.editando) {
-      this.atualizarLancamento(form);
+      this.atualizarLancamento();
     } else {
-      this.adicionarLancamento(form);
+      this.adicionarLancamento();
     }
   }
 
-  adicionarLancamento(form: FormControl) {
-    this.lancamentoService.adicionar(this.lancamento)
+  adicionarLancamento() {
+    // passamos os dados do form reativo
+    this.lancamentoService.adicionar(this.formulario.value)
       .then((newLancamento) => {
         this.toasty.success('Lançamento adicionado com sucesso!');
         // limpa o form
@@ -113,10 +154,13 @@ export class LancamentoCadastroComponent implements OnInit {
       .catch(erro => this.errorHandler.handle(erro));
   }
 
-  atualizarLancamento(form: FormControl) {
-    this.lancamentoService.atualizar(this.lancamento)
+  atualizarLancamento() {
+    this.lancamentoService.atualizar(this.formulario.value)
       .then((lancamento) => {
-        this.lancamento = lancamento;
+        // this.lancamento = lancamento;
+        // patchValue atualiza apenas a propriedades declaradas em formulario
+        // setValue sobrescreve essas propriedades
+        this.formulario.patchValue(lancamento);
 
         this.toasty.success('Lançamento alterado com sucesso!');
         this.getPageTitleOnEdit();
@@ -124,15 +168,15 @@ export class LancamentoCadastroComponent implements OnInit {
       .catch(erro => this.errorHandler.handle(erro));
   }
 
-  novo (form: FormControl) {
+  novo () {
     // limpa o form
-    form.reset();
-    this.lancamento = new Lancamento();
+    this.formulario.reset();
+    // this.lancamento = new Lancamento();
     this.router.navigate(['lancamentos/novo']);
   }
 
   getPageTitleOnEdit() {
-    this.title.setTitle(`Edição de lançamento: ${this.lancamento.descricao}`);
+    this.title.setTitle(`Edição de lançamento: ${this.formulario.get('descricao').value}`);
   }
 
 }
