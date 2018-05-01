@@ -13,9 +13,10 @@ const routes: Routes = [
   // configuramos tbm as rotas dos children em seus respectivos modulos
   { path: 'lancamentos', loadChildren: 'app/lancamentos/lancamentos.module#LancamentosModule' },
   { path: 'pessoas', loadChildren: 'app/pessoas/pessoas.module#PessoasModule' },
+  { path: 'dashboard', loadChildren: 'app/dashboard/dashboard.module#DashboardModule' },
 
   // a raiz do app direciona para cá, pathMatch padrao é prefix
-  { path: '', redirectTo: 'lancamentos', pathMatch: 'full' },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'nao-autorizado', component: NaoAutorizadoComponent },
   { path: 'pagina-nao-encontrada', component: PaginaNaoEncontradaComponent },
   // pagina nao encontrada
