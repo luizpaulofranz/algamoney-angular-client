@@ -12,8 +12,10 @@
     <!--colocamos o nome do usuario logado-->
     <li class="navbar-usuario">{{auth.jwtPayload?.nome}}</li>
     <!-- routerLink eh para roteamento, routerLinkActive aplica a classe CSS "ativo" caso esteja ativo -->
+    <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.hasPermission('ROLE_PESQUISAR_LANCAMENTO')"><a routerLink="/dashboard">Dashboard</a></li>
     <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.hasPermission('ROLE_PESQUISAR_LANCAMENTO')"><a routerLink="/lancamentos">Lançamentos</a></li>
     <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.hasPermission('ROLE_PESQUISAR_PESSOA')"><a routerLink="/pessoas">Pessoas</a></li>
+    <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="auth.hasPermission('ROLE_PESQUISAR_LANCAMENTO')"><a routerLink="/relatorios/lancamentos">Relatórios</a></li>
     <li class="navbar-menuitem"><a href="javascript:;" (click)="logout()">Logout</a></li>
   </ul>
 
