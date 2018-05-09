@@ -1,5 +1,6 @@
 import { DashboardService } from './../dashboard.service';
 import { Component, OnInit } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,7 +13,25 @@ export class DashboardComponent implements OnInit {
   lineChartData: any;
   pieChartData: any;
 
-  constructor(private dashboardService: DashboardService) { }
+  /* Configuracoes do Chart.js, para formatar os valores dos graficos */
+  options = {
+    tooltips: {
+      callbacks: {
+        label: (tooltipItem, data) => {
+          const dataset = data.datasets[tooltipItem.datasetIndex];
+          const valor = dataset.data[tooltipItem.index];
+          const label = dataset.label ? (dataset.label + ': ') : '';
+
+          return label + this.decimalPipe.transform(valor, '1.2-2');
+        }
+      }
+    }
+};
+
+  constructor(
+    private dashboardService: DashboardService,
+    private decimalPipe: DecimalPipe
+  ) { }
 
   ngOnInit() {
     // carregamos os dados dos graficos do backend
