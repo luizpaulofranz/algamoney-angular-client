@@ -19,6 +19,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 
 import { PessoasService } from '../pessoas/pessoas.service';
+import { DashboardService } from './../dashboard/dashboard.service';
 
 // E por fim, registre o localePt como 'pt-BR'
 registerLocaleData(localePt, 'pt-BR');
@@ -47,6 +48,7 @@ registerLocaleData(localePt, 'pt-BR');
     ConfirmationService,
     CategoriaService,
     PessoasService,
+    DashboardService,
     // Servico para alterar o titulo das nossas paginas
     Title,
     // Provider Por Valor
