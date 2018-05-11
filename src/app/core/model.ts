@@ -17,6 +17,13 @@ export class Pessoa {
   ativo = true;
 }
 
+export class Contato {
+  codigo: number;
+  nome: string;
+  email: string;
+  telefone: string;
+}
+
 export class Categoria {
   id: number;
 }

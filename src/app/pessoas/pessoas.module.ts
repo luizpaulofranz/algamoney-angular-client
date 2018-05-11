@@ -13,6 +13,7 @@ import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { InputMaskModule } from 'primeng/inputmask';
+import { PanelModule } from 'primeng/panel';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { InputMaskModule } from 'primeng/inputmask';
     TooltipModule,
     InputMaskModule,
     SharedModule,
-    PessoasRoutingModule
+    PessoasRoutingModule,
+    PanelModule
   ],
   declarations: [
     PessoasPesquisaComponent,
