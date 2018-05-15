@@ -43,6 +43,19 @@ export class PessoaCadastroComponent implements OnInit {
     this.contato = new Contato();
   }
 
+  confirmarContato(frm: FormControl) {
+    // precisamos clonar o objeto para dar o push, pois caso
+    // mantenhamos this.contato, ao alterarmos esse, vai atualizar o grid
+    this.pessoa.contatos.push(this.clonarContato(this.contato));
+    this.showFormContato = false;
+    frm.reset();
+  }
+
+  clonarContato(contato: Contato): Contato {
+    return new Contato(contato.id,
+      contato.nome, contato.email, contato.telefone);
+  }
+
   carregarPessoa(id: number) {
     if (id) {
       this.pessoaService.getById(id).then(
