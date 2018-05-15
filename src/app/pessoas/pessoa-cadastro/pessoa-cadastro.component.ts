@@ -5,7 +5,7 @@ import { Title } from '@angular/platform-browser';
 
 import { ToastyService } from 'ng2-toasty';
 
-import { Pessoa } from './../../core/model';
+import { Pessoa, Contato } from './../../core/model';
 import { ErrorHandlerService } from '../../core/error-handler.service';
 import { PessoasService } from '../pessoas.service';
 
@@ -17,6 +17,8 @@ import { PessoasService } from '../pessoas.service';
 export class PessoaCadastroComponent implements OnInit {
 
   pessoa = new Pessoa();
+  showFormContato = false;
+  contato: Contato;
 
   constructor(
     private pessoaService: PessoasService,
@@ -34,6 +36,11 @@ export class PessoaCadastroComponent implements OnInit {
     // assim pegamos dados das rotas
     const id = this.route.snapshot.params['id'];
     this.carregarPessoa(id);
+  }
+
+  newContato() {
+    this.showFormContato = true;
+    this.contato = new Contato();
   }
 
   carregarPessoa(id: number) {
