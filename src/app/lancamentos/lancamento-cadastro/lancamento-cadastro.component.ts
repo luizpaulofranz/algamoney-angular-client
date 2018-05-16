@@ -62,8 +62,31 @@ export class LancamentoCadastroComponent implements OnInit {
   }
 
   // acrescentamos o nosso token de acesso à requisiscao
-  antesUploadAnexo(event) {
+  beforeUploadAnexo(event) {
     event.xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+  }
+
+  finishUpload(event) {
+    const anexo = JSON.parse(event.xhr.response);
+
+    this.formulario.patchValue({
+      anexo: anexo.nome,
+      urlAnexo: anexo.url
+    });
+  }
+
+  errorUpload(event) {
+    this.toasty.error('Erro ao tentar enviar anexo!');
+  }
+
+  get nomeAnexo() {
+    const nome = this.formulario.get('anexo').value;
+
+    if (nome) {
+      return nome.substring(nome.indexOf('_') + 1, nome.length);
+    }
+
+    return '';
   }
 
   get urlUploadAnexo() {
@@ -89,7 +112,9 @@ export class LancamentoCadastroComponent implements OnInit {
         id: [null, Validators.required],
         nome: []
       }),
-      observacao: []
+      observacao: [],
+      anexo: [],
+      urlAnexo: []
     });
   }
 
