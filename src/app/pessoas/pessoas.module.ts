@@ -15,6 +15,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { InputMaskModule } from 'primeng/inputmask';
 import { PanelModule } from 'primeng/panel';
 import { DialogModule } from 'primeng/dialog';
+import { PessoaCadastroContatoComponent } from './pessoa-cadastro-contato/pessoa-cadastro-contato.component';
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import { DialogModule } from 'primeng/dialog';
   ],
   declarations: [
     PessoasPesquisaComponent,
-    PessoaCadastroComponent
+    PessoaCadastroComponent,
+    PessoaCadastroContatoComponent
   ],
   exports: [ ],
   providers: []

@@ -17,9 +17,6 @@ import { PessoasService } from '../pessoas.service';
 export class PessoaCadastroComponent implements OnInit {
 
   pessoa = new Pessoa();
-  showFormContato = false;
-  contato: Contato;
-  contatoIndex: number;
 
   constructor(
     private pessoaService: PessoasService,
@@ -37,36 +34,6 @@ export class PessoaCadastroComponent implements OnInit {
     // assim pegamos dados das rotas
     const id = this.route.snapshot.params['id'];
     this.carregarPessoa(id);
-  }
-
-  newContato() {
-    this.showFormContato = true;
-    this.contato = new Contato();
-    this.contatoIndex = this.pessoa.contatos.length;
-  }
-
-  editContato(contato: Contato, index: number) {
-    this.contato = this.clonarContato(contato);
-    this.showFormContato = true;
-    this.contatoIndex = index;
-  }
-
-  confirmarContato(frm: FormControl) {
-    // precisamos clonar o objeto para dar o push, pois caso
-    // mantenhamos this.contato, ao alterarmos esse, vai atualizar o grid
-    this.pessoa.contatos[this.contatoIndex] = this.clonarContato(this.contato);
-    // this.pessoa.contatos.push(this.clonarContato(this.contato));
-    this.showFormContato = false;
-    frm.reset();
-  }
-
-  removeContato(index: number) {
-    this.pessoa.contatos.splice(index, 1);
-  }
-
-  clonarContato(contato: Contato): Contato {
-    return new Contato(contato.id,
-      contato.nome, contato.email, contato.telefone);
   }
 
   carregarPessoa(id: number) {
