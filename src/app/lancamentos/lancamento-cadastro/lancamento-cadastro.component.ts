@@ -61,6 +61,15 @@ export class LancamentoCadastroComponent implements OnInit {
     this.carregarPessoas();
   }
 
+  // acrescentamos o nosso token de acesso à requisiscao
+  antesUploadAnexo(event) {
+    event.xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
+  }
+
+  get urlUploadAnexo() {
+    return this.lancamentoService.urlUploadAnexo();
+  }
+
   /* Configuracoes iniciais do form reativo */
   configForm() {
     this.formulario = this.formBuilder.group({

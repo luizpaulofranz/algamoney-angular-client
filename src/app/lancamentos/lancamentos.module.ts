@@ -12,6 +12,7 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { DropdownModule } from 'primeng/dropdown';
+import { FileUploadModule } from 'primeng/fileupload';
 
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 
@@ -34,6 +35,7 @@ import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos
     DropdownModule,
     CurrencyMaskModule,
     SharedModule,
+    FileUploadModule,
     // colocar router sempre por ultimo
     LancamentosRoutingModule
   ],

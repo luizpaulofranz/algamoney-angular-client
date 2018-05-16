@@ -16,6 +16,10 @@ export class LancamentoService {
 
   constructor(private http: AuthHttp) { }
 
+  urlUploadAnexo(): string {
+    return `${this.lancamentosUrl}/anexo`;
+  }
+
   pesquisar(filtro: LancamentoFiltro): Promise<any> {
     const params = new URLSearchParams();
     // adicionamos os parametros da paginacao
