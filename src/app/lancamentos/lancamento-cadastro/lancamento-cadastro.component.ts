@@ -1,3 +1,6 @@
+/**
+ * Esse component implementa um form reativo.
+*/
 import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 // monte de imports para formularios reativos
@@ -28,6 +31,8 @@ export class LancamentoCadastroComponent implements OnInit {
 
   // objeto que contem o formulario reativo
   public formulario: FormGroup;
+  // controla o progressbra de uploads
+  public uploadEmAndamento = false;
 
   tipos = [
     { label: 'Receita', value: 'RECEITA' },
@@ -63,6 +68,7 @@ export class LancamentoCadastroComponent implements OnInit {
 
   // acrescentamos o nosso token de acesso à requisiscao
   beforeUploadAnexo(event) {
+    this.uploadEmAndamento = true;
     event.xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('token'));
   }
 
@@ -73,10 +79,20 @@ export class LancamentoCadastroComponent implements OnInit {
       anexo: anexo.nome,
       urlAnexo: anexo.url
     });
+    this.uploadEmAndamento = false;
   }
 
   errorUpload(event) {
     this.toasty.error('Erro ao tentar enviar anexo!');
+    this.uploadEmAndamento = false;
+  }
+
+  // ao remover um anexo, precisamos salvar o lancamento
+  removerAnexo() {
+    this.formulario.patchValue({
+      anexo: null,
+      urlAnexo: null
+    });
   }
 
   get nomeAnexo() {
@@ -121,7 +137,6 @@ export class LancamentoCadastroComponent implements OnInit {
   // verifica se estamos editando, o get permite acessar "editando no template"
   get editando() {
     // return Boolean(this.lancamento.id);
-
     // assim recuperamos propriedades de formularios reativos
     return Boolean(this.formulario.get('id').value);
   }
