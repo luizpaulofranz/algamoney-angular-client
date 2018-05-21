@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { SharedModule } from './../shared/shared.module';
 import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.component';
 import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.component';
+import { PessoaCadastroContatoComponent } from './pessoa-cadastro-contato/pessoa-cadastro-contato.component';
 
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
@@ -15,7 +16,6 @@ import { TooltipModule } from 'primeng/tooltip';
 import { InputMaskModule } from 'primeng/inputmask';
 import { PanelModule } from 'primeng/panel';
 import { DialogModule } from 'primeng/dialog';
-import { PessoaCadastroContatoComponent } from './pessoa-cadastro-contato/pessoa-cadastro-contato.component';
 
 @NgModule({
   imports: [
@@ -29,7 +29,8 @@ import { PessoaCadastroContatoComponent } from './pessoa-cadastro-contato/pessoa
     SharedModule,
     PessoasRoutingModule,
     PanelModule,
-    DialogModule
+    DialogModule,
+    DropdownModule
   ],
   declarations: [
     PessoasPesquisaComponent,

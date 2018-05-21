@@ -5,7 +5,7 @@ import { Title } from '@angular/platform-browser';
 
 import { ToastyService } from 'ng2-toasty';
 
-import { Pessoa, Contato } from './../../core/model';
+import { Pessoa, Contato, Estado } from './../../core/model';
 import { ErrorHandlerService } from '../../core/error-handler.service';
 import { PessoasService } from '../pessoas.service';
 
@@ -17,6 +17,9 @@ import { PessoasService } from '../pessoas.service';
 export class PessoaCadastroComponent implements OnInit {
 
   pessoa = new Pessoa();
+  estados: any[];
+  cidades: any[];
+  selectedState: Estado;
 
   constructor(
     private pessoaService: PessoasService,
@@ -31,9 +34,22 @@ export class PessoaCadastroComponent implements OnInit {
 
   ngOnInit() {
     this.title.setTitle('Nova Pessoa');
+    this.carregarEstados();
     // assim pegamos dados das rotas
     const id = this.route.snapshot.params['id'];
     this.carregarPessoa(id);
+  }
+
+  carregarEstados () {
+    this.pessoaService.listarEstados().then(lista => {
+      this.estados = lista.map(estado => ({ label: estado.nome, value: estado.id}));
+    }).catch(error => this.errorHandler.handle(error));
+  }
+
+  selectState() {
+    this.pessoaService.pesquisarCidades(this.selectedState).then(lista => {
+      this.cidades = lista.map(cidade => ({ label: cidade.nome, value: cidade.id}));
+    }).catch(error => this.errorHandler.handle(error));
   }
 
   carregarPessoa(id: number) {

@@ -6,14 +6,21 @@ import { AuthHttp } from 'angular2-jwt';
 
 // importe tudo desse local e dê o apelido de "moment"
 import * as moment from 'moment';
-import { Pessoa } from '../core/model';
+import { Pessoa, Estado, Cidade } from '../core/model';
 import { environment } from './../../environments/environment';
 
 @Injectable()
 export class PessoasService {
-  pessoasUrl = `${environment.apiUrl}/pessoas`;
 
-  constructor(private http: AuthHttp) { }
+  pessoasUrl: string;
+  cidadesUrl: string;
+  estadosUrl: string;
+
+  constructor(private http: AuthHttp) {
+    this.pessoasUrl = `${environment.apiUrl}/pessoas`;
+    this.cidadesUrl = `${environment.apiUrl}/cidades`;
+    this.estadosUrl = `${environment.apiUrl}/estados`;
+   }
 
   pesquisar(filtro: PessoaFiltro): Promise<any> {
     // para conter nossos filtros na URL
@@ -80,6 +87,22 @@ export class PessoasService {
         const retorno = response.json() as Pessoa;
         return retorno;
       });
+  }
+
+  listarEstados(): Promise<Estado[]> {
+    return this.http.get(this.estadosUrl)
+      .toPromise()
+      .then(response => response.json());
+  }
+
+  pesquisarCidades(idEstado): Promise<Cidade[]> {
+    const params = new URLSearchParams();
+    params.set('idEstado', idEstado);
+
+    return this.http.get( this.cidadesUrl, {
+      search: params
+    }).toPromise()
+      .then(response => response.json());
   }
 
 }

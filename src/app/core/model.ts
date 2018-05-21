@@ -1,4 +1,14 @@
 // declaramos todas as models nesse arquivo
+export class Estado {
+  id: number;
+  nome: string;
+}
+
+export class Cidade {
+  id: number;
+  nome: string;
+  estado = new Estado();
+}
 
 export class Endereco {
   logradouro: string;
@@ -6,8 +16,7 @@ export class Endereco {
   complemento: string;
   bairro: string;
   cep: string;
-  cidade: string;
-  estado: string;
+  cidade = new Cidade();
 }
 
 export class Contato {
