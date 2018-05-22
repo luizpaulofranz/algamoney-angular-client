@@ -38,7 +38,6 @@ export class PessoasPesquisaComponent {
         this.pessoas = response.content;
         this.totalRegistros = response.totalElements;
       });
-      console.log(this.pessoas);
   }
 
   // metodo chamado pelo componente grid do primeNg
