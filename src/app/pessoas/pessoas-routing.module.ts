@@ -23,7 +23,7 @@ const routes: Routes = [
   },
   {
     // isso se torna pessoa/nova
-    path: 'nova',
+    path: 'novo',
     component: PessoaCadastroComponent,
     canActivate: [AuthGuard],
     data: { roles: ['ROLE_CADASTRAR_PESSOA'] }
