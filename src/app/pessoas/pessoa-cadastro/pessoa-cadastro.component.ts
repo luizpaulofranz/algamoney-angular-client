@@ -19,7 +19,7 @@ export class PessoaCadastroComponent implements OnInit {
   pessoa = new Pessoa();
   estados: any[];
   cidades: any[];
-  selectedState: Estado;
+  selectedState: number;
 
   constructor(
     private pessoaService: PessoasService,
@@ -46,6 +46,13 @@ export class PessoaCadastroComponent implements OnInit {
     }).catch(error => this.errorHandler.handle(error));
   }
 
+  carregarCidades() {
+    this.pessoaService.pesquisarCidades(this.selectedState).then(lista => {
+      this.cidades = lista.map(c => ({ label: c.nome, value: c.id }));
+    })
+    .catch(erro => this.errorHandler.handle(erro));
+  }
+
   selectState() {
     this.pessoaService.pesquisarCidades(this.selectedState).then(lista => {
       this.cidades = lista.map(cidade => ({ label: cidade.nome, value: cidade.id}));
@@ -58,6 +65,14 @@ export class PessoaCadastroComponent implements OnInit {
         // quando resolver a promise, atribuimos ao nosso lancamento
         response => {
         this.pessoa = response;
+
+        this.selectedState = (this.pessoa.endereco.cidade) ?
+        this.pessoa.endereco.cidade.estado.id : null;
+
+        if (this.selectedState) {
+          this.carregarCidades();
+        }
+
         // atualizamos o titulo da pagina
         this.getPageTitleOnEdit();
       }).catch(error => this.errorHandler.handle(error));
